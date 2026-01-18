@@ -1,0 +1,150 @@
+---
+import { Battery, Search, ShoppingCart, Menu } from 'lucide-react';
+import Button from './Button.astro';
+---
+
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
+  <div class="container mx-auto flex h-16 items-center justify-between px-4">
+    <div class="flex items-center gap-8">
+      <a href="/" class="flex items-center gap-2 font-bold tracking-tighter text-xl">
+        <Battery className="h-6 w-6 text-primary fill-primary/20" />
+        <span>VOLT<span class="text-primary">CORE</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <div class="dropdown-wrapper relative">
+          <button class="dropdown-trigger flex items-center gap-1 hover:text-primary transition-colors py-2">
+            Products
+            <svg class="h-4 w-4 dropdown-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div class="dropdown-menu absolute left-0 top-full mt-1 bg-card border border-border rounded shadow-lg py-6 px-8 w-max z-50 opacity-0 invisible transition-all">
+            <div class="flex gap-12">
+              <!-- Automotive Batteries -->
+              <div class="min-w-[220px]">
+                <h3 class="text-xs font-bold tracking-wider text-foreground/70 uppercase mb-4">Automotive Batteries</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a href="/products?category=automotive&type=two_wheeler" class="text-sm hover:text-primary transition-colors">
+                      Two Wheeler Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=automotive&type=four_wheeler" class="text-sm hover:text-primary transition-colors">
+                      Four Wheeler Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=automotive&type=commercial" class="text-sm hover:text-primary transition-colors">
+                      Commercial Vehicle Batteries
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Home & Backup -->
+              <div class="min-w-[220px]">
+                <h3 class="text-xs font-bold tracking-wider text-foreground/70 uppercase mb-4">Home & Backup Batteries</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a href="/products?category=inverter" class="text-sm hover:text-primary transition-colors">
+                      Inverter Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=ups" class="text-sm hover:text-primary transition-colors">
+                      UPS Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=tubular" class="text-sm hover:text-primary transition-colors">
+                      Tubular Batteries
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Industrial & Energy -->
+              <div class="min-w-[220px]">
+                <h3 class="text-xs font-bold tracking-wider text-foreground/70 uppercase mb-4">Industrial & Energy</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a href="/products?category=solar" class="text-sm hover:text-primary transition-colors">
+                      Solar Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=industrial" class="text-sm hover:text-primary transition-colors">
+                      Industrial Batteries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products?category=lithium" class="text-sm hover:text-primary transition-colors">
+                      Lithium-ion Batteries
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Brands -->
+              <div class="min-w-[200px] border-l border-border pl-12">
+                <h3 class="text-xs font-bold tracking-wider text-foreground/70 uppercase mb-4">Browse by Brand</h3>
+                <ul class="space-y-3">
+                  <li><a href="/products?brand=amaron" class="text-sm hover:text-primary transition-colors">Amaron</a></li>
+                  <li><a href="/products?brand=exide" class="text-sm hover:text-primary transition-colors">Exide</a></li>
+                  <li><a href="/products?brand=luminous" class="text-sm hover:text-primary transition-colors">Luminous</a></li>
+                  <li><a href="/products?brand=livguard" class="text-sm hover:text-primary transition-colors">Livguard</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/b2b" class="hover:text-primary transition-colors">B2B Solutions</a>
+        <a href="/support" class="hover:text-primary transition-colors">Support</a>
+        <a href="/about" class="hover:text-primary transition-colors">About</a>
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button class="hidden sm:flex h-10 w-10 items-center justify-center hover:bg-accent rounded-md transition-colors">
+        <Search className="h-5 w-5" />
+      </button>
+      <button class="h-10 w-10 flex items-center justify-center hover:bg-accent rounded-md transition-colors">
+        <ShoppingCart className="h-5 w-5" />
+      </button>
+      <Button class="hidden sm:flex border-primary text-primary hover:bg-primary hover:text-white bg-transparent">
+        Get a Quote
+      </Button>
+      <button class="md:hidden h-10 w-10 flex items-center justify-center" id="mobile-menu-btn">
+        <Menu className="h-6 w-6" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Simple dropdown interaction
+  const dropdownWrapper = document.querySelector('.dropdown-wrapper');
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+  const dropdownIcon = document.querySelector('.dropdown-icon');
+
+  if (dropdownWrapper && dropdownMenu) {
+    let timeout: NodeJS.Timeout;
+
+    dropdownWrapper.addEventListener('mouseenter', () => {
+      clearTimeout(timeout);
+      dropdownMenu.classList.remove('opacity-0', 'invisible');
+      dropdownIcon?.classList.add('rotate-180');
+    });
+
+    dropdownWrapper.addEventListener('mouseleave', () => {
+      timeout = setTimeout(() => {
+        dropdownMenu.classList.add('opacity-0', 'invisible');
+        dropdownIcon?.classList.remove('rotate-180');
+      }, 150);
+    });
+  }
+</script>
