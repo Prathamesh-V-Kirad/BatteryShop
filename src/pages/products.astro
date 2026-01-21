@@ -1,0 +1,456 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Checkbox from '../components/Checkbox.astro';
+import Label from '../components/Label.astro';
+import Separator from '../components/Separator.astro';
+import { ShoppingCart } from 'lucide-react';
+
+// Get query parameters
+const url = new URL(Astro.request.url);
+const searchParams = url.searchParams;
+
+// Extract filter values from query params
+const selectedApplications = searchParams.getAll('application');
+const selectedTypes = searchParams.getAll('type');
+const selectedCapacities = searchParams.getAll('capacity');
+const selectedBrands = searchParams.getAll('brand');
+const selectedVoltages = searchParams.getAll('voltage');
+
+// Helper function to check if a value is selected
+const isSelected = (paramArray: string[], value: string) => {
+  return paramArray.some(param => param.toLowerCase() === value.toLowerCase());
+};
+
+const PRODUCTS = [
+  {
+    id: 1,
+    name: "VoltCore X-Series 150Ah",
+    category: "Inverter",
+    type: "Tubular",
+    voltage: "12V",
+    capacity: "150Ah",
+    capacityValue: 150,
+    price: 189,
+    image: "/tubular-inverter-battery-tall.jpg",
+    specs: ["Deep Cycle", "Zero Maintenance", "48M Warranty"],
+    brand: "VoltCore",
+  },
+  {
+    id: 2,
+    name: "Industrial Max 200",
+    category: "Industrial",
+    type: "Lead Acid",
+    voltage: "24V",
+    capacity: "200Ah",
+    capacityValue: 200,
+    price: 450,
+    image: "/heavy-duty-industrial-battery-rack.jpg",
+    specs: ["High Discharge", "Vibration Resistant", "36M Warranty"],
+    brand: "VoltCore",
+  },
+  {
+    id: 3,
+    name: "SolarStorage L4 Lithium",
+    category: "Solar",
+    type: "Lithium-ion",
+    voltage: "48V",
+    capacity: "100Ah",
+    capacityValue: 100,
+    price: 1200,
+    image: "/lithium-ion-solar-battery-wall.jpg",
+    specs: ["6000+ Cycles", "BMS Integrated", "10Y Warranty"],
+    brand: "VoltCore",
+  },
+  {
+    id: 4,
+    name: "AutoStart Prime 80",
+    category: "Automotive",
+    type: "SMF",
+    voltage: "12V",
+    capacity: "80Ah",
+    capacityValue: 80,
+    price: 95,
+    image: "/car-battery-smf.jpg",
+    specs: ["Cold Start", "Acid Leak Proof", "24M Warranty"],
+    brand: "Amaron",
+  },
+  {
+    id: 5,
+    name: "VoltCore Premium 120Ah",
+    category: "Inverter",
+    type: "Tubular",
+    voltage: "12V",
+    capacity: "120Ah",
+    capacityValue: 120,
+    price: 159,
+    image: "/tubular-inverter-battery-tall.jpg",
+    specs: ["Long Life", "Low Maintenance", "36M Warranty"],
+    brand: "VoltCore",
+  },
+  {
+    id: 6,
+    name: "Heavy Duty Truck Battery",
+    category: "Automotive",
+    type: "Lead Acid",
+    voltage: "12V",
+    capacity: "180Ah",
+    capacityValue: 180,
+    price: 225,
+    image: "/car-battery-smf.jpg",
+    specs: ["High CCA", "Vibration Proof", "30M Warranty"],
+    brand: "Exide",
+  },
+];
+
+const applications = [
+  { label: "Automotive", value: "automotive" },
+  { label: "Inverter", value: "inverter" },
+  { label: "Solar", value: "solar" },
+  { label: "Industrial", value: "industrial" },
+];
+
+const batteryTypes = [
+  { label: "Lead Acid", value: "lead_acid" },
+  { label: "Lithium-ion", value: "lithium" },
+  { label: "Tubular", value: "tubular" },
+  { label: "Gel", value: "gel" },
+  { label: "SMF", value: "smf" },
+];
+
+const capacities = [
+  { label: "40-80", value: "40-80", min: 40, max: 80 },
+  { label: "100-150", value: "100-150", min: 100, max: 150 },
+  { label: "150-200", value: "150-200", min: 150, max: 200 },
+  { label: "200+", value: "200+", min: 200, max: 9999 },
+];
+
+const voltages = [
+  { label: "6V", value: "6" },
+  { label: "12V", value: "12" },
+  { label: "24V", value: "24" },
+  { label: "48V", value: "48" },
+];
+
+const brands = [
+  { label: "VoltCore", value: "voltcore" },
+  { label: "Amaron", value: "amaron" },
+  { label: "Exide", value: "exide" },
+  { label: "Luminous", value: "luminous" },
+  { label: "Livguard", value: "livguard" },
+];
+
+// Filter products based on query params
+let filteredProducts = PRODUCTS;
+
+if (selectedApplications.length > 0) {
+  filteredProducts = filteredProducts.filter(p => 
+    selectedApplications.some(app => app.toLowerCase() === p.category.toLowerCase())
+  );
+}
+
+if (selectedTypes.length > 0) {
+  filteredProducts = filteredProducts.filter(p => 
+    selectedTypes.some(type => {
+      const normalizedType = type.toLowerCase().replace(/_/g, ' ').replace(/-/g, ' ');
+      const normalizedProductType = p.type.toLowerCase().replace(/-/g, ' ');
+      return normalizedType === normalizedProductType;
+    })
+  );
+}
+
+if (selectedVoltages.length > 0) {
+  filteredProducts = filteredProducts.filter(p => 
+    selectedVoltages.some(v => p.voltage.startsWith(v))
+  );
+}
+
+if (selectedBrands.length > 0) {
+  filteredProducts = filteredProducts.filter(p => 
+    selectedBrands.some(brand => brand.toLowerCase() === p.brand.toLowerCase())
+  );
+}
+
+if (selectedCapacities.length > 0) {
+  filteredProducts = filteredProducts.filter(p => {
+    return selectedCapacities.some(capRange => {
+      const capacity = capacities.find(c => c.value === capRange);
+      if (!capacity) return false;
+      return p.capacityValue >= capacity.min && p.capacityValue <= capacity.max;
+    });
+  });
+}
+---
+
+<Layout title="Products - VoltCore">
+  <div class="flex min-h-screen flex-col">
+    <Navbar />
+
+    <div class="container mx-auto px-4 py-6 lg:py-8">
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        
+        <!-- Mobile Filter Toggle -->
+        <button
+          id="filter-toggle"
+          class="lg:hidden flex items-center justify-between w-full px-4 py-3 bg-card border border-border rounded-lg mb-4"
+        >
+          <span class="font-bold text-sm uppercase tracking-widest">Filters</span>
+          <svg class="h-5 w-5 transition-transform" id="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Sidebar Filters -->
+        <aside 
+          id="filters-sidebar"
+          class="w-full lg:w-64 space-y-6 lg:space-y-8 flex-shrink-0 hidden lg:block"
+        >
+          <form id="filter-form" class="space-y-6 lg:space-y-8">
+            <!-- Application Filter -->
+            <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
+              <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Application</h3>
+              <div class="space-y-3">
+                {applications.map((item) => (
+                  <div class="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`app-${item.value}`}
+                      name="application"
+                      value={item.value}
+                      checked={isSelected(selectedApplications, item.value)}
+                      class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 cursor-pointer accent-primary filter-checkbox"
+                    />
+                    <Label for={`app-${item.value}`}>{item.label}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator class="lg:block hidden" />
+
+            <!-- Battery Type Filter -->
+            <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
+              <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Battery Type</h3>
+              <div class="space-y-3">
+                {batteryTypes.map((item) => (
+                  <div class="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`type-${item.value}`}
+                      name="type"
+                      value={item.value}
+                      checked={isSelected(selectedTypes, item.value)}
+                      class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 cursor-pointer accent-primary filter-checkbox"
+                    />
+                    <Label for={`type-${item.value}`}>{item.label}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator class="lg:block hidden" />
+
+            <!-- Voltage Filter -->
+            <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
+              <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Voltage</h3>
+              <div class="space-y-3">
+                {voltages.map((item) => (
+                  <div class="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`voltage-${item.value}`}
+                      name="voltage"
+                      value={item.value}
+                      checked={isSelected(selectedVoltages, item.value)}
+                      class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 cursor-pointer accent-primary filter-checkbox"
+                    />
+                    <Label for={`voltage-${item.value}`}>{item.label}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator class="lg:block hidden" />
+
+            <!-- Capacity Filter -->
+            <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
+              <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Capacity (Ah)</h3>
+              <div class="space-y-3">
+                {capacities.map((item) => (
+                  <div class="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`capacity-${item.value}`}
+                      name="capacity"
+                      value={item.value}
+                      checked={isSelected(selectedCapacities, item.value)}
+                      class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 cursor-pointer accent-primary filter-checkbox"
+                    />
+                    <Label for={`capacity-${item.value}`}>{item.label} Ah</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator class="lg:block hidden" />
+
+            <!-- Brand Filter -->
+            <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
+              <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Brand</h3>
+              <div class="space-y-3">
+                {brands.map((item) => (
+                  <div class="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`brand-${item.value}`}
+                      name="brand"
+                      value={item.value}
+                      checked={isSelected(selectedBrands, item.value)}
+                      class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 cursor-pointer accent-primary filter-checkbox"
+                    />
+                    <Label for={`brand-${item.value}`}>{item.label}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Clear Filters Button -->
+            {(selectedApplications.length > 0 || selectedTypes.length > 0 || selectedCapacities.length > 0 || selectedBrands.length > 0 || selectedVoltages.length > 0) && (
+              <Button 
+                variant="outline" 
+                class="w-full text-xs font-bold uppercase tracking-wider"
+                href="/products"
+              >
+                Clear All Filters
+              </Button>
+            )}
+          </form>
+
+          <div class="p-4 lg:p-6 bg-zinc-900 text-white space-y-4 rounded-lg">
+            <p class="text-xs font-bold uppercase tracking-widest text-primary">Enterprise</p>
+            <p class="text-sm text-zinc-400">Looking for custom specifications or bulk orders?</p>
+            <Button 
+              variant="outline" 
+              class="w-full border-primary text-primary hover:bg-primary hover:text-white bg-transparent text-xs font-bold uppercase tracking-wider"
+            >
+              Contact B2B Team
+            </Button>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-6 lg:space-y-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-4">
+            <h1 class="text-xl sm:text-2xl font-bold uppercase tracking-tight">Product Catalog</h1>
+            <p class="text-sm text-muted-foreground">{filteredProducts.length} Results Found</p>
+          </div>
+
+          {filteredProducts.length === 0 ? (
+            <div class="text-center py-16 space-y-4">
+              <p class="text-xl font-semibold text-muted-foreground">No products found</p>
+              <p class="text-sm text-muted-foreground">Try adjusting your filters</p>
+              <Button href="/products" class="mt-4">Clear Filters</Button>
+            </div>
+          ) : (
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+              {filteredProducts.map((product) => (
+                <Card class="group overflow-hidden border-zinc-200 hover:border-primary transition-all flex flex-col">
+                  <div class="relative aspect-square bg-zinc-50 overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      class="absolute inset-0 w-full h-full object-contain p-6 sm:p-8 group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
+                      <div class="bg-white/90 backdrop-blur px-2 py-1 text-[10px] font-bold uppercase tracking-widest border">
+                        {product.category}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1 flex flex-col">
+                    <div>
+                      <h3 class="font-bold text-base sm:text-lg leading-tight mb-1">{product.name}</h3>
+                      <div class="flex gap-3 sm:gap-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                        <span>{product.voltage}</span>
+                        <span>•</span>
+                        <span>{product.capacity}</span>
+                      </div>
+                    </div>
+
+                    <div class="space-y-1.5 flex-1">
+                      {product.specs.map((spec) => (
+                        <div class="flex items-center gap-2 text-xs">
+                          <div class="h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                          <span class="text-zinc-600 font-medium">{spec}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                      <Button
+                        variant="outline"
+                        class="flex-1 text-xs font-bold uppercase tracking-wider bg-transparent"
+                        href={`/products/${product.id}`}
+                      >
+                        Details
+                      </Button>
+                      {product.category === "Industrial" ? (
+                        <Button class="flex-1 text-xs font-bold uppercase tracking-wider">
+                          Get Quote
+                        </Button>
+                      ) : (
+                        <Button class="flex-1 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
+                          <ShoppingCart className="h-3.5 w-3.5" />
+                          <span class="hidden sm:inline">Buy Now</span>
+                          <span class="sm:hidden">Buy</span>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Mobile filter toggle
+  const filterToggle = document.getElementById('filter-toggle');
+  const filtersSidebar = document.getElementById('filters-sidebar');
+  const filterIcon = document.getElementById('filter-icon');
+
+  if (filterToggle && filtersSidebar && filterIcon) {
+    filterToggle.addEventListener('click', () => {
+      filtersSidebar.classList.toggle('hidden');
+      filterIcon.classList.toggle('rotate-180');
+    });
+  }
+
+  // Handle filter checkbox changes
+  const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+  
+  filterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const form = document.getElementById('filter-form') as HTMLFormElement;
+      if (!form) return;
+
+      const formData = new FormData(form);
+      const params = new URLSearchParams();
+
+      // Build query string from all checked checkboxes
+      formData.forEach((value, key) => {
+        params.append(key, value.toString());
+      });
+
+      // Redirect to filtered URL
+      window.location.href = `/products?${params.toString()}`;
+    });
+  });
+</script>

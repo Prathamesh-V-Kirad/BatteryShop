@@ -1,0 +1,337 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Button from '../../components/Button.astro';
+import Separator from '../../components/Separator.astro';
+import {
+  FileText,
+  Download,
+  ShieldCheck,
+  Settings,
+  ArrowLeft,
+  Zap,
+  Factory,
+  Sun,
+  CheckCircle2,
+  Clock,
+} from 'lucide-react';
+
+// Mock data based on the products catalog
+const PRODUCTS = [
+  {
+    id: "1",
+    name: "VoltCore X-Series 150Ah",
+    shortDescription:
+      "High-performance deep cycle tubular battery engineered for reliable home inverter systems and UPS applications.",
+    category: "Inverter",
+    type: "Tubular",
+    price: 189,
+    image: "/tubular-inverter-battery-tall.jpg",
+    features: ["Deep Cycle Technology", "Ultra-Low Maintenance", "High Ambient Temp Resistance"],
+    specs: {
+      voltage: "12V",
+      capacity: "150Ah @ C20",
+      batteryType: "Tall Tubular Lead Acid",
+      cycleLife: "1200 Cycles @ 80% DOD",
+      dimensions: "505 x 190 x 410 mm",
+      weight: "52.5 kg",
+      warranty: "48 Months (Pro-rata)",
+    },
+    applications: ["Home Inverters", "UPS Systems", "Solar Storage", "Office Backup"],
+    certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
+  },
+  {
+    id: "2",
+    name: "Industrial Max 200",
+    shortDescription:
+      "Heavy-duty industrial battery designed for demanding applications requiring high discharge rates and extreme reliability.",
+    category: "Industrial",
+    type: "Lead Acid",
+    price: 450,
+    image: "/heavy-duty-industrial-battery-rack.jpg",
+    features: ["High Discharge Rate", "Vibration Resistant Design", "Extended Service Life"],
+    specs: {
+      voltage: "24V",
+      capacity: "200Ah @ C10",
+      batteryType: "Heavy Duty Lead Acid",
+      cycleLife: "800 Cycles @ 80% DOD",
+      dimensions: "620 x 240 x 480 mm",
+      weight: "68.5 kg",
+      warranty: "36 Months (Pro-rata)",
+    },
+    applications: ["Industrial Equipment", "Telecom Backup", "Manufacturing", "Data Centers"],
+    certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
+  },
+  {
+    id: "3",
+    name: "SolarStorage L4 Lithium",
+    shortDescription:
+      "Advanced lithium-ion battery system with integrated BMS for superior solar energy storage and long cycle life.",
+    category: "Solar",
+    type: "Lithium-ion",
+    price: 1200,
+    image: "/lithium-ion-solar-battery-wall.jpg",
+    features: ["6000+ Charge Cycles", "Integrated BMS", "Fast Charging Support"],
+    specs: {
+      voltage: "48V",
+      capacity: "100Ah @ C5",
+      batteryType: "LiFePO4 Lithium-ion",
+      cycleLife: "6000+ Cycles @ 80% DOD",
+      dimensions: "520 x 450 x 180 mm",
+      weight: "42.0 kg",
+      warranty: "120 Months (10 Years)",
+    },
+    applications: ["Solar Storage", "Home Energy Systems", "Off-grid Systems", "Renewable Energy"],
+    certifications: ["ISO 9001:2015", "CE Certified", "UN38.3"],
+  },
+  {
+    id: "4",
+    name: "AutoStart Prime 80",
+    shortDescription:
+      "Maintenance-free SMF battery engineered for reliable cold starts and superior performance in automotive applications.",
+    category: "Automotive",
+    type: "SMF",
+    price: 95,
+    image: "/car-battery-smf.jpg",
+    features: ["High Cold Cranking Amps", "Sealed Maintenance Free", "Spill Proof Design"],
+    specs: {
+      voltage: "12V",
+      capacity: "80Ah @ C20",
+      batteryType: "Sealed Maintenance Free",
+      cycleLife: "400 Cycles",
+      dimensions: "315 x 175 x 190 mm",
+      weight: "18.5 kg",
+      warranty: "24 Months",
+    },
+    applications: ["Cars", "SUVs", "Light Commercial Vehicles", "Sedans"],
+    certifications: ["ISO 9001:2015", "CE Certified"],
+  },
+];
+
+const { id } = Astro.params;
+const product = PRODUCTS.find((p) => p.id === id);
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+
+// Helper to format spec keys
+const formatSpecKey = (key: string) => {
+  return key.replace(/([A-Z])/g, ' $1').trim();
+};
+
+// Helper to get icon for application
+const getApplicationIcon = (app: string) => {
+  if (app.includes("Home")) return Zap;
+  if (app.includes("Solar")) return Sun;
+  if (app.includes("Office") || app.includes("Industrial") || app.includes("Manufacturing") || app.includes("Data")) return Factory;
+  return Settings;
+};
+---
+
+<Layout title={`${product.name} - VoltCore`}>
+  <div class="flex min-h-screen flex-col">
+    <Navbar />
+
+    <main class="flex-1 container mx-auto px-4 py-8 lg:py-12">
+      <!-- Breadcrumbs / Back button -->
+      <a
+        href="/products"
+        class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary mb-6 lg:mb-8 group"
+      >
+        <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+        Back to Catalog
+      </a>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 xl:gap-24 items-start">
+        <!-- Product Images -->
+        <div class="space-y-4 lg:space-y-6">
+          <div class="aspect-square relative bg-zinc-50 border rounded-lg overflow-hidden">
+            <img
+              src={product.image}
+              alt={product.name}
+              class="absolute inset-0 w-full h-full object-contain p-8 lg:p-12"
+            />
+            <div class="absolute top-4 left-4 lg:top-6 lg:left-6">
+              <span class="bg-white/90 backdrop-blur px-2 lg:px-3 py-1 lg:py-1.5 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] border shadow-sm">
+                {product.category}
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 lg:gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div class="aspect-square relative bg-zinc-50 border rounded-md cursor-pointer hover:border-primary transition-colors">
+                <img
+                  src={product.image}
+                  alt={`${product.name} view ${i}`}
+                  class="absolute inset-0 w-full h-full object-contain p-2 opacity-50 hover:opacity-100 transition-opacity"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="space-y-6 lg:space-y-10">
+          <div class="space-y-3 lg:space-y-4">
+            <h1 class="text-2xl lg:text-4xl font-bold tracking-tight uppercase leading-tight">{product.name}</h1>
+            <p class="text-base lg:text-lg text-muted-foreground leading-relaxed">{product.shortDescription}</p>
+          </div>
+
+          <!-- Key Features Icons -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
+            {product.features.map((feature) => (
+              <div class="flex items-start gap-2 lg:gap-3">
+                <div class="h-4 w-4 lg:h-5 lg:w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle2 className="h-2.5 w-2.5 lg:h-3 lg:w-3 text-primary" />
+                </div>
+                <span class="text-[10px] lg:text-xs font-bold uppercase tracking-wider text-zinc-700 leading-tight">{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          <Separator />
+
+          <!-- Primary CTAs -->
+          <div class="flex flex-col sm:flex-row gap-3 lg:gap-4">
+            <Button size="lg" class="h-12 lg:h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1">
+              Request Bulk Quote (B2B)
+            </Button>
+            <Button
+              variant="outline"
+              class="h-12 lg:h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1 border-primary text-primary hover:bg-primary/5 bg-transparent"
+            >
+              Contact for Price (Retail)
+            </Button>
+          </div>
+
+          <!-- Trust Indicators -->
+          <div class="grid grid-cols-3 gap-2 lg:gap-4 border p-3 lg:p-4 bg-zinc-50/50 rounded-lg">
+            <div class="text-center space-y-1">
+              <ShieldCheck className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Warranty</p>
+              <p class="text-[10px] lg:text-[11px] text-muted-foreground">{product.specs.warranty.split(' ')[0]}M</p>
+            </div>
+            <div class="text-center space-y-1 border-x">
+              <Settings className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Certified</p>
+              <p class="text-[10px] lg:text-[11px] text-muted-foreground">ISO/CE/IEC</p>
+            </div>
+            <div class="text-center space-y-1">
+              <Clock className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Support</p>
+              <p class="text-[10px] lg:text-[11px] text-muted-foreground">24/7 Technical</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Sections -->
+      <div class="mt-12 lg:mt-24 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
+        <div class="lg:col-span-2 space-y-8 lg:space-y-12">
+          <!-- Specs Table -->
+          <section class="space-y-4 lg:space-y-6">
+            <div class="flex items-center gap-4">
+              <h2 class="text-lg lg:text-xl font-bold uppercase tracking-wider">Technical Specifications</h2>
+              <div class="h-px flex-1 bg-border" />
+            </div>
+            <div class="border rounded-lg overflow-hidden">
+              <table class="w-full text-sm">
+                <tbody class="divide-y">
+                  {Object.entries(product.specs).map(([key, value], i) => (
+                    <tr class={i % 2 === 0 ? "bg-zinc-50/50" : "bg-white"}>
+                      <td class="px-4 lg:px-6 py-3 lg:py-4 font-bold uppercase text-[9px] lg:text-[10px] tracking-widest text-muted-foreground w-1/3">
+                        {formatSpecKey(key)}
+                      </td>
+                      <td class="px-4 lg:px-6 py-3 lg:py-4 font-medium text-zinc-900 text-xs lg:text-sm">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Applications -->
+          <section class="space-y-4 lg:space-y-6">
+            <div class="flex items-center gap-4">
+              <h2 class="text-lg lg:text-xl font-bold uppercase tracking-wider">Ideal Applications</h2>
+              <div class="h-px flex-1 bg-border" />
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
+              {product.applications.map((app) => {
+                const Icon = getApplicationIcon(app);
+                return (
+                  <div class="p-4 lg:p-6 border rounded-lg bg-zinc-50 flex flex-col items-center text-center gap-2 lg:gap-3 group hover:border-primary transition-colors">
+                    <Icon className="h-5 w-5 lg:h-6 lg:w-6 text-primary" />
+                    <span class="text-[10px] lg:text-xs font-bold uppercase tracking-widest leading-tight">{app}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+
+        <!-- Downloads & Support Sidebar -->
+        <aside class="space-y-6 lg:space-y-8">
+          <section class="space-y-4 lg:space-y-6">
+            <h3 class="text-base lg:text-lg font-bold uppercase tracking-wider">Documentation</h3>
+            <div class="space-y-3">
+              <button class="w-full flex items-center justify-between h-auto py-3 lg:py-4 px-4 lg:px-6 bg-transparent border border-zinc-200 rounded-md hover:border-primary transition-colors group">
+                <div class="flex items-center gap-3 lg:gap-4">
+                  <FileText className="h-4 w-4 lg:h-5 lg:w-5 text-zinc-400 group-hover:text-primary transition-colors" />
+                  <div class="text-left">
+                    <p class="text-[10px] lg:text-xs font-bold uppercase tracking-wider">Technical Datasheet</p>
+                    <p class="text-[9px] lg:text-[10px] text-muted-foreground">PDF (2.4 MB)</p>
+                  </div>
+                </div>
+                <Download className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-zinc-400" />
+              </button>
+              <button class="w-full flex items-center justify-between h-auto py-3 lg:py-4 px-4 lg:px-6 bg-transparent border border-zinc-200 rounded-md hover:border-primary transition-colors group">
+                <div class="flex items-center gap-3 lg:gap-4">
+                  <Settings className="h-4 w-4 lg:h-5 lg:w-5 text-zinc-400 group-hover:text-primary transition-colors" />
+                  <div class="text-left">
+                    <p class="text-[10px] lg:text-xs font-bold uppercase tracking-wider">Installation Guide</p>
+                    <p class="text-[9px] lg:text-[10px] text-muted-foreground">PDF (1.1 MB)</p>
+                  </div>
+                </div>
+                <Download className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-zinc-400" />
+              </button>
+            </div>
+          </section>
+
+          <section class="p-6 lg:p-8 bg-zinc-950 text-white rounded-lg space-y-4 lg:space-y-6">
+            <div class="space-y-2">
+              <h3 class="text-base lg:text-lg font-bold uppercase tracking-wider text-primary">Need Expert Help?</h3>
+              <p class="text-xs lg:text-sm text-zinc-400 leading-relaxed">
+                Our engineers can assist with system sizing and technical compatibility for your project.
+              </p>
+            </div>
+            <ul class="space-y-3 lg:space-y-4">
+              <li class="flex items-center gap-2 lg:gap-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest">
+                <CheckCircle2 className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-primary flex-shrink-0" />
+                Free System Sizing
+              </li>
+              <li class="flex items-center gap-2 lg:gap-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest">
+                <CheckCircle2 className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-primary flex-shrink-0" />
+                Technical Audits
+              </li>
+            </ul>
+            <Button class="w-full font-bold uppercase text-[10px] lg:text-xs tracking-widest h-10 lg:h-12">
+              Talk to an Engineer
+            </Button>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+     
+    <footer class="border-t bg-zinc-50 py-8 lg:py-12 mt-12 lg:mt-24">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-xs font-medium text-muted-foreground uppercase tracking-[0.2em]">
+          © 2025 VoltCore Power Solutions. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>

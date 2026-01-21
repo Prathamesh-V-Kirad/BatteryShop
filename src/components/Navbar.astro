@@ -14,7 +14,9 @@ import Button from './Button.astro';
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
         <div class="dropdown-wrapper relative">
           <button class="dropdown-trigger flex items-center gap-1 hover:text-primary transition-colors py-2">
-            Products
+            <a href="/products">
+              Products
+            </a>
             <svg class="h-4 w-4 dropdown-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -102,7 +104,6 @@ import Button from './Button.astro';
           </div>
         </div>
 
-        <a href="/b2b" class="hover:text-primary transition-colors">B2B Solutions</a>
         <a href="/support" class="hover:text-primary transition-colors">Support</a>
         <a href="/about" class="hover:text-primary transition-colors">About</a>
       </nav>
@@ -115,7 +116,7 @@ import Button from './Button.astro';
       <button class="h-10 w-10 flex items-center justify-center hover:bg-accent rounded-md transition-colors">
         <ShoppingCart className="h-5 w-5" />
       </button>
-      <Button class="hidden sm:flex border-primary text-primary hover:bg-primary hover:text-white bg-transparent">
+      <Button class="hidden sm:flex border-primary text-primary hover:bg-primary/70 hover:text-white bg-primary">
         Get a Quote
       </Button>
       <button class="md:hidden h-10 w-10 flex items-center justify-center" id="mobile-menu-btn">
@@ -132,7 +133,7 @@ import Button from './Button.astro';
   const dropdownIcon = document.querySelector('.dropdown-icon');
 
   if (dropdownWrapper && dropdownMenu) {
-    let timeout: NodeJS.Timeout;
+    let timeout: number;
 
     dropdownWrapper.addEventListener('mouseenter', () => {
       clearTimeout(timeout);
