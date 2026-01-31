@@ -5,7 +5,7 @@ import Button from '../components/Button.astro';
 import Label from '../components/Label.astro';
 import Separator from '../components/Separator.astro';
 import { ProductCard } from '../components/ProductCard.tsx';
-
+import {products} from '../data/products'
 
 
 const url = new URL(Astro.request.url);
@@ -22,92 +22,93 @@ const isSelected = (paramArray: string[], value: string) => {
   return paramArray.some(param => param.toLowerCase() === value.toLowerCase());
 };
 
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "VoltCore X-Series 150Ah",
-    category: "Inverter",
-    type: "Tubular",
-    voltage: "12V",
-    capacity: "150Ah",
-    capacityValue: 150,
-    price: 189,
-    image: "/tubular-inverter-battery-tall.jpg",
-    specs: ["Deep Cycle", "Zero Maintenance", "48M Warranty"],
-    brand: "VoltCore",
-  },
-  {
-    id: 2,
-    name: "Industrial Max 200",
-    category: "Industrial",
-    type: "Lead Acid",
-    voltage: "24V",
-    capacity: "200Ah",
-    capacityValue: 200,
-    price: 450,
-    image: "/heavy-duty-industrial-battery-rack.jpg",
-    specs: ["High Discharge", "Vibration Resistant", "36M Warranty"],
-    brand: "VoltCore",
-  },
-  {
-    id: 3,
-    name: "SolarStorage L4 Lithium",
-    category: "Solar",
-    type: "Lithium-ion",
-    voltage: "48V",
-    capacity: "100Ah",
-    capacityValue: 100,
-    price: 1200,
-    image: "/lithium-ion-solar-battery-wall.jpg",
-    specs: ["6000+ Cycles", "BMS Integrated", "10Y Warranty"],
-    brand: "VoltCore",
-  },
-  {
-    id: 4,
-    name: "AutoStart Prime 80",
-    category: "Automotive",
-    type: "SMF",
-    voltage: "12V",
-    capacity: "80Ah",
-    capacityValue: 80,
-    price: 95,
-    image: "/car-battery-smf.jpg",
-    specs: ["Cold Start", "Acid Leak Proof", "24M Warranty"],
-    brand: "Amaron",
-  },
-  {
-    id: 5,
-    name: "VoltCore Premium 120Ah",
-    category: "Inverter",
-    type: "Tubular",
-    voltage: "12V",
-    capacity: "120Ah",
-    capacityValue: 120,
-    price: 159,
-    image: "/tubular-inverter-battery-tall.jpg",
-    specs: ["Long Life", "Low Maintenance", "36M Warranty"],
-    brand: "VoltCore",
-  },
-  {
-    id: 6,
-    name: "Heavy Duty Truck Battery",
-    category: "Automotive",
-    type: "Lead Acid",
-    voltage: "12V",
-    capacity: "180Ah",
-    capacityValue: 180,
-    price: 225,
-    image: "/car-battery-smf.jpg",
-    specs: ["High CCA", "Vibration Proof", "30M Warranty"],
-    brand: "Exide",
-  },
-];
-
+// const PRODUCTS = [
+//   {
+//     id: 1,
+//     name: "VoltCore X-Series 150Ah",
+//     category: "Inverter",
+//     type: "Tubular",
+//     voltage: "12V",
+//     capacity: "150Ah",
+//     capacityValue: 150,
+//     price: 189,
+//     image: "/tubular-inverter-battery-tall.jpg",
+//     specs: ["Deep Cycle", "Zero Maintenance", "48M Warranty"],
+//     brand: "VoltCore",
+//   },
+//   {
+//     id: 2,
+//     name: "Industrial Max 200",
+//     category: "Industrial",
+//     type: "Lead Acid",
+//     voltage: "24V",
+//     capacity: "200Ah",
+//     capacityValue: 200,
+//     price: 450,
+//     image: "/heavy-duty-industrial-battery-rack.jpg",
+//     specs: ["High Discharge", "Vibration Resistant", "36M Warranty"],
+//     brand: "VoltCore",
+//   },
+//   {
+//     id: 3,
+//     name: "SolarStorage L4 Lithium",
+//     category: "Solar",
+//     type: "Lithium-ion",
+//     voltage: "48V",
+//     capacity: "100Ah",
+//     capacityValue: 100,
+//     price: 1200,
+//     image: "/lithium-ion-solar-battery-wall.jpg",
+//     specs: ["6000+ Cycles", "BMS Integrated", "10Y Warranty"],
+//     brand: "VoltCore",
+//   },
+//   {
+//     id: 4,
+//     name: "AutoStart Prime 80",
+//     category: "Automotive",
+//     type: "SMF",
+//     voltage: "12V",
+//     capacity: "80Ah",
+//     capacityValue: 80,
+//     price: 95,
+//     image: "/car-battery-smf.jpg",
+//     specs: ["Cold Start", "Acid Leak Proof", "24M Warranty"],
+//     brand: "Amaron",
+//   },
+//   {
+//     id: 5,
+//     name: "VoltCore Premium 120Ah",
+//     category: "Inverter",
+//     type: "Tubular",
+//     voltage: "12V",
+//     capacity: "120Ah",
+//     capacityValue: 120,
+//     price: 159,
+//     image: "/tubular-inverter-battery-tall.jpg",
+//     specs: ["Long Life", "Low Maintenance", "36M Warranty"],
+//     brand: "VoltCore",
+//   },
+//   {
+//     id: 6,
+//     name: "Heavy Duty Truck Battery",
+//     category: "Automotive",
+//     type: "Lead Acid",
+//     voltage: "12V",
+//     capacity: "180Ah",
+//     capacityValue: 180,
+//     price: 225,
+//     image: "/car-battery-smf.jpg",
+//     specs: ["High CCA", "Vibration Proof", "30M Warranty"],
+//     brand: "Exide",
+//   },
+// ];
+const PRODUCTS = products;
 const applications = [
   { label: "Automotive", value: "automotive" },
   { label: "Inverter", value: "inverter" },
   { label: "Solar", value: "solar" },
   { label: "Industrial", value: "industrial" },
+  { label: "Two Wheeler", value: "two wheeler Battery" },
 ];
 
 const batteryTypes = [
@@ -141,42 +142,96 @@ const brands = [
 ];
 
 
+
+
 let filteredProducts = PRODUCTS;
 
+
 if (selectedApplications.length > 0) {
-  filteredProducts = filteredProducts.filter(p => 
-    selectedApplications.some(app => app.toLowerCase() === p.category.toLowerCase())
-  );
+  const appMappings: Record<string, string[]> = {
+    
+    'automotive': ['automotive', 'car', 'wheeler', 'motorcycle', 'scooter', 'bike', 'truck', 'tractor', 'suv'],
+    'inverter': ['inverter', 'tubular', 'home ups', 'power backup'],
+    'solar': ['solar', 'renewable'],
+    'industrial': ['industrial', 'commercial', 'heavy duty'],
+    
+    'two wheeler': ['two wheeler', 'motorcycle', 'scooter', 'bike'] 
+  };
+
+  filteredProducts = filteredProducts.filter(p => {
+    const pCat = p.category.toLowerCase(); 
+
+    return selectedApplications.some(app => {
+      const filterKey = app.toLowerCase().replace(/_/g, ' ').replace(/-/g, ' ');
+      const keywords = appMappings[filterKey] || [filterKey];
+      
+      
+      return keywords.some(keyword => pCat.includes(keyword));
+    });
+  });
 }
+
 
 if (selectedTypes.length > 0) {
-  filteredProducts = filteredProducts.filter(p => 
-    selectedTypes.some(type => {
-      const normalizedType = type.toLowerCase().replace(/_/g, ' ').replace(/-/g, ' ');
-      const normalizedProductType = p.type.toLowerCase().replace(/-/g, ' ');
-      return normalizedType === normalizedProductType;
-    })
-  );
+  const typeMappings: Record<string, string[]> = {
+    
+    'lead_acid': ['lead', 'acid', 'vrla', 'vlhr', 'agm', 'flooded', 'wet', 'smf', 'maintenance free'],
+    'lithium': ['lithium', 'li-ion', 'lifepo4'],
+    'tubular': ['tubular', 'tall'],
+    'gel': ['gel'],
+    'smf': ['smf', 'vrla', 'sealed']
+  };
+
+  filteredProducts = filteredProducts.filter(p => {
+    const pType = p.type.toLowerCase(); 
+
+    return selectedTypes.some(type => {
+      const filterKey = type.toLowerCase();
+      const keywords = typeMappings[filterKey] || [filterKey]; 
+      
+      
+      return keywords.some(keyword => pType.includes(keyword));
+    });
+  });
 }
+
 
 if (selectedVoltages.length > 0) {
-  filteredProducts = filteredProducts.filter(p => 
-    selectedVoltages.some(v => p.voltage.startsWith(v))
-  );
+  filteredProducts = filteredProducts.filter(p => {
+    
+    const pVoltageStr = (p.specs?.voltage || "").toLowerCase(); 
+    const pVoltageVal = p.voltageValue?.toString(); 
+
+    return selectedVoltages.some(v => {
+      
+      return pVoltageStr.includes(v) || pVoltageVal === v;
+    });
+  });
 }
 
+
 if (selectedBrands.length > 0) {
-  filteredProducts = filteredProducts.filter(p => 
-    selectedBrands.some(brand => brand.toLowerCase() === p.brand.toLowerCase())
-  );
+  filteredProducts = filteredProducts.filter(p => {
+    const pBrand = p.brand.toLowerCase();
+    
+    return selectedBrands.some(brand => {
+      
+      return pBrand.includes(brand.toLowerCase());
+    });
+  });
 }
+
+
+
 
 if (selectedCapacities.length > 0) {
   filteredProducts = filteredProducts.filter(p => {
     return selectedCapacities.some(capRange => {
-      const capacity = capacities.find(c => c.value === capRange);
-      if (!capacity) return false;
-      return p.capacityValue >= capacity.min && p.capacityValue <= capacity.max;
+      const rangeConfig = capacities.find(c => c.value === capRange);
+      if (!rangeConfig) return false; 
+      
+      
+      return p.capacityValue >= rangeConfig.min && p.capacityValue <= rangeConfig.max;
     });
   });
 }

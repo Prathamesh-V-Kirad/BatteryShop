@@ -1,0 +1,185 @@
+---
+import { Search } from "lucide-react";
+import { products } from "../data/products";
+---
+
+
+<div class="product-search relative w-full max-w-lg">
+
+  
+  <script
+    type="application/json"
+    class="product-data"
+    set:html={JSON.stringify(products)}
+  ></script>
+
+
+  <div
+    class="flex items-center gap-2 border border-border rounded-lg bg-background px-3 py-2 shadow-sm"
+  >
+    <Search className="h-4 w-4 text-muted-foreground" />
+
+    <input
+      type="text"
+      placeholder="Search batteries..."
+      class="search-input w-full bg-transparent outline-none text-sm"
+    />
+  </div>
+
+
+  <div
+  class="search-dropdown mt-2 w-full bg-card border border-border rounded-xl shadow-xl p-4 hidden z-50
+         relative md:absolute md:top-full md:left-0"
+  >
+
+    <div class="flex gap-3 mb-4">
+      <select
+        class="brand-filter w-1/2 border border-border rounded-md px-2 py-1 text-sm bg-background"
+      >
+        <option value="">All Brands</option>
+      </select>
+
+      <select
+        class="ah-filter w-1/2 border border-border rounded-md px-2 py-1 text-sm bg-background"
+      >
+        <option value="">All Ah</option>
+      </select>
+    </div>
+
+
+    <div
+      class="search-results max-h-[300px] overflow-y-auto space-y-3 hidden"
+    ></div>
+
+
+    <p class="no-results text-sm text-muted-foreground hidden">
+      No products found.
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+document.addEventListener("DOMContentLoaded", () => {
+
+
+  document.querySelectorAll(".product-search").forEach((component) => {
+
+
+    const raw = component.querySelector(".product-data")?.textContent;
+    if (!raw) return;
+
+    const allProducts = JSON.parse(raw);
+
+  
+    const input = component.querySelector(".search-input");
+    const dropdown = component.querySelector(".search-dropdown");
+    const resultsBox = component.querySelector(".search-results");
+    const noResults = component.querySelector(".no-results");
+
+    const brandFilter = component.querySelector(".brand-filter");
+    const ahFilter = component.querySelector(".ah-filter");
+
+    if (!input || !dropdown) return;
+
+
+    const brands = [...new Set(allProducts.map((p) => p.brand))];
+    brands.forEach((b) => {
+      const opt = document.createElement("option");
+      opt.value = b;
+      opt.textContent = b;
+      brandFilter.appendChild(opt);
+    });
+
+ 
+    const capacities = [...new Set(allProducts.map((p) => p.capacityValue))].sort(
+      (a, b) => a - b
+    );
+
+    capacities.forEach((c) => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = `${c}Ah`;
+      ahFilter.appendChild(opt);
+    });
+
+
+    function debounce(fn, delay) {
+      let timer;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+  
+    function runSearch() {
+      const query = input.value.toLowerCase().trim();
+      const brand = brandFilter.value;
+      const ah = ahFilter.value;
+
+      resultsBox.innerHTML = "";
+      dropdown.classList.remove("hidden");
+
+      let filtered = allProducts;
+
+      if (query) {
+        filtered = filtered.filter((p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.searchTags.join(" ").toLowerCase().includes(query)
+        );
+      }
+
+      if (brand) filtered = filtered.filter((p) => p.brand === brand);
+      if (ah) filtered = filtered.filter((p) => String(p.capacityValue) === ah);
+
+      if (filtered.length === 0) {
+        resultsBox.classList.add("hidden");
+        noResults.classList.remove("hidden");
+        return;
+      }
+
+      noResults.classList.add("hidden");
+      resultsBox.classList.remove("hidden");
+
+      filtered.slice(0, 8).forEach((product) => {
+        const link = document.createElement("a");
+
+        link.href = `/products/${product.id}`;
+        link.className =
+          "flex items-center gap-3 p-2 rounded-lg hover:bg-accent transition";
+
+        link.innerHTML = `
+          <img src="${product.image}"
+            class="h-10 w-10 rounded-md border object-cover"/>
+
+          <div class="flex-1">
+            <p class="text-sm font-semibold">${product.name}</p>
+            <p class="text-xs text-muted-foreground">
+              ${product.brand} • ${product.capacityValue}Ah
+            </p>
+          </div>
+
+          <span class="text-sm font-bold text-primary">
+            ₹${product.price}
+          </span>
+        `;
+
+        resultsBox.appendChild(link);
+      });
+    }
+
+
+    const debouncedSearch = debounce(runSearch, 250);
+
+    input.addEventListener("input", debouncedSearch);
+    brandFilter.addEventListener("change", runSearch);
+    ahFilter.addEventListener("change", runSearch);
+
+    document.addEventListener("click", (e) => {
+      if (!component.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+  });
+});
+</script>

@@ -1,6 +1,7 @@
 ---
 import { Battery, Search, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import CartDrawer from './CartDrawer';
+import ProductSearch from './ProductSearch.astro';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
@@ -37,9 +38,9 @@ import CartDrawer from './CartDrawer';
               <div class="min-w-[200px]">
                 <h3 class="text-xs font-bold tracking-wider text-foreground/70 uppercase mb-4">Automotive Batteries</h3>
                 <ul class="space-y-3">
-                  <li><a href="/products?category=automotive&type=two_wheeler" class="text-sm hover:text-primary transition-colors">Two Wheeler Batteries</a></li>
-                  <li><a href="/products?category=automotive&type=four_wheeler" class="text-sm hover:text-primary transition-colors">Four Wheeler Batteries</a></li>
-                  <li><a href="/products?category=automotive&type=commercial" class="text-sm hover:text-primary transition-colors">Commercial Vehicle Batteries</a></li>
+                  <li><a href="/products?application=two_wheeler" class="text-sm hover:text-primary transition-colors">Two Wheeler Batteries</a></li>
+                  <li><a href="/products?application=four_wheeler" class="text-sm hover:text-primary transition-colors">Four Wheeler Batteries</a></li>
+                  <li><a href="/products?application=commercial" class="text-sm hover:text-primary transition-colors">Commercial Vehicle Batteries</a></li>
                 </ul>
               </div>
 
@@ -80,10 +81,9 @@ import CartDrawer from './CartDrawer';
     </div>
 
     <div class="flex items-center gap-2 sm:gap-4">
-      <button class="hidden sm:flex h-10 w-10 items-center justify-center hover:bg-accent rounded-md transition-colors">
-        <Search className="h-5 w-5" />
-  
-      </button>
+      <div class="hidden md:block w-[380px]">
+        <ProductSearch />
+      </div>
       
       <CartDrawer client:load />
       
@@ -105,14 +105,12 @@ import CartDrawer from './CartDrawer';
   >
     <div class="h-full overflow-y-auto bg-background pb-20">
       <nav class="container mx-auto px-4 py-6 space-y-4">
-        <div class="sm:hidden pb-2">
-          <div class="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input type="text" placeholder="Search..." class="w-full bg-accent/80 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-1 ring-primary" />
-          </div>
-        </div>
 
+          <div class="px-4 pt-4 pb-3 border-b border-border">
+            <ProductSearch />
+          </div>
         <details class="group border-b border-border pb-4">
+          
           <summary class="list-none flex items-center justify-between py-3 px-2 hover:bg-accent rounded-md cursor-pointer">
             <span class="text-sm font-semibold text-foreground">Products</span>
             <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
@@ -122,9 +120,9 @@ import CartDrawer from './CartDrawer';
             <div>
               <h3 class="text-[10px] font-bold tracking-wider text-foreground/50 uppercase mb-3">Automotive Batteries</h3>
               <ul class="space-y-3 border-l border-primary/20 pl-4">
-                <li><a href="/products?category=automotive&type=two_wheeler" class="text-sm block">Two Wheeler</a></li>
-                <li><a href="/products?category=automotive&type=four_wheeler" class="text-sm block">Four Wheeler</a></li>
-                <li><a href="/products?category=automotive&type=commercial" class="text-sm block">Commercial</a></li>
+                <li><a href="/products?application=two_wheeler" class="text-sm block">Two Wheeler</a></li>
+                <li><a href="/products?application=four_wheeler" class="text-sm block">Four Wheeler</a></li>
+                <li><a href="/products?application=commercial" class="text-sm block">Commercial</a></li>
               </ul>
             </div>
 
@@ -162,7 +160,7 @@ import CartDrawer from './CartDrawer';
       </nav>
     </div>
   </div>
-  
+
 </header>
 
 <script is:inline>
@@ -199,5 +197,7 @@ import CartDrawer from './CartDrawer';
       });
     }
   });
+
+
 
 </script>

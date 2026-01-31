@@ -15,99 +15,100 @@ import {
   CheckCircle2,
   Clock,
 } from 'lucide-react';
+import { products } from '../../data/products';
 
+// const PRODUCTS = [
+//   {
+//     id: "1",
+//     name: "VoltCore X-Series 150Ah",
+//     shortDescription:
+//       "High-performance deep cycle tubular battery engineered for reliable home inverter systems and UPS applications.",
+//     category: "Inverter",
+//     type: "Tubular",
+//     price: 189,
+//     image: "/tubular-inverter-battery-tall.jpg",
+//     features: ["Deep Cycle Technology", "Ultra-Low Maintenance", "High Ambient Temp Resistance"],
+//     specs: {
+//       voltage: "12V",
+//       capacity: "150Ah @ C20",
+//       batteryType: "Tall Tubular Lead Acid",
+//       cycleLife: "1200 Cycles @ 80% DOD",
+//       dimensions: "505 x 190 x 410 mm",
+//       weight: "52.5 kg",
+//       warranty: "48 Months (Pro-rata)",
+//     },
+//     applications: ["Home Inverters", "UPS Systems", "Solar Storage", "Office Backup"],
+//     certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
+//   },
+//   {
+//     id: "2",
+//     name: "Industrial Max 200",
+//     shortDescription:
+//       "Heavy-duty industrial battery designed for demanding applications requiring high discharge rates and extreme reliability.",
+//     category: "Industrial",
+//     type: "Lead Acid",
+//     price: 450,
+//     image: "/heavy-duty-industrial-battery-rack.jpg",
+//     features: ["High Discharge Rate", "Vibration Resistant Design", "Extended Service Life"],
+//     specs: {
+//       voltage: "24V",
+//       capacity: "200Ah @ C10",
+//       batteryType: "Heavy Duty Lead Acid",
+//       cycleLife: "800 Cycles @ 80% DOD",
+//       dimensions: "620 x 240 x 480 mm",
+//       weight: "68.5 kg",
+//       warranty: "36 Months (Pro-rata)",
+//     },
+//     applications: ["Industrial Equipment", "Telecom Backup", "Manufacturing", "Data Centers"],
+//     certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
+//   },
+//   {
+//     id: "3",
+//     name: "SolarStorage L4 Lithium",
+//     shortDescription:
+//       "Advanced lithium-ion battery system with integrated BMS for superior solar energy storage and long cycle life.",
+//     category: "Solar",
+//     type: "Lithium-ion",
+//     price: 1200,
+//     image: "/lithium-ion-solar-battery-wall.jpg",
+//     features: ["6000+ Charge Cycles", "Integrated BMS", "Fast Charging Support"],
+//     specs: {
+//       voltage: "48V",
+//       capacity: "100Ah @ C5",
+//       batteryType: "LiFePO4 Lithium-ion",
+//       cycleLife: "6000+ Cycles @ 80% DOD",
+//       dimensions: "520 x 450 x 180 mm",
+//       weight: "42.0 kg",
+//       warranty: "120 Months (10 Years)",
+//     },
+//     applications: ["Solar Storage", "Home Energy Systems", "Off-grid Systems", "Renewable Energy"],
+//     certifications: ["ISO 9001:2015", "CE Certified", "UN38.3"],
+//   },
+//   {
+//     id: "4",
+//     name: "AutoStart Prime 80",
+//     shortDescription:
+//       "Maintenance-free SMF battery engineered for reliable cold starts and superior performance in automotive applications.",
+//     category: "Automotive",
+//     type: "SMF",
+//     price: 95,
+//     image: "/car-battery-smf.jpg",
+//     features: ["High Cold Cranking Amps", "Sealed Maintenance Free", "Spill Proof Design"],
+//     specs: {
+//       voltage: "12V",
+//       capacity: "80Ah @ C20",
+//       batteryType: "Sealed Maintenance Free",
+//       cycleLife: "400 Cycles",
+//       dimensions: "315 x 175 x 190 mm",
+//       weight: "18.5 kg",
+//       warranty: "24 Months",
+//     },
+//     applications: ["Cars", "SUVs", "Light Commercial Vehicles", "Sedans"],
+//     certifications: ["ISO 9001:2015", "CE Certified"],
+//   },
+// ];
 
-const PRODUCTS = [
-  {
-    id: "1",
-    name: "VoltCore X-Series 150Ah",
-    shortDescription:
-      "High-performance deep cycle tubular battery engineered for reliable home inverter systems and UPS applications.",
-    category: "Inverter",
-    type: "Tubular",
-    price: 189,
-    image: "/tubular-inverter-battery-tall.jpg",
-    features: ["Deep Cycle Technology", "Ultra-Low Maintenance", "High Ambient Temp Resistance"],
-    specs: {
-      voltage: "12V",
-      capacity: "150Ah @ C20",
-      batteryType: "Tall Tubular Lead Acid",
-      cycleLife: "1200 Cycles @ 80% DOD",
-      dimensions: "505 x 190 x 410 mm",
-      weight: "52.5 kg",
-      warranty: "48 Months (Pro-rata)",
-    },
-    applications: ["Home Inverters", "UPS Systems", "Solar Storage", "Office Backup"],
-    certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
-  },
-  {
-    id: "2",
-    name: "Industrial Max 200",
-    shortDescription:
-      "Heavy-duty industrial battery designed for demanding applications requiring high discharge rates and extreme reliability.",
-    category: "Industrial",
-    type: "Lead Acid",
-    price: 450,
-    image: "/heavy-duty-industrial-battery-rack.jpg",
-    features: ["High Discharge Rate", "Vibration Resistant Design", "Extended Service Life"],
-    specs: {
-      voltage: "24V",
-      capacity: "200Ah @ C10",
-      batteryType: "Heavy Duty Lead Acid",
-      cycleLife: "800 Cycles @ 80% DOD",
-      dimensions: "620 x 240 x 480 mm",
-      weight: "68.5 kg",
-      warranty: "36 Months (Pro-rata)",
-    },
-    applications: ["Industrial Equipment", "Telecom Backup", "Manufacturing", "Data Centers"],
-    certifications: ["ISO 9001:2015", "CE Certified", "IEC 60896"],
-  },
-  {
-    id: "3",
-    name: "SolarStorage L4 Lithium",
-    shortDescription:
-      "Advanced lithium-ion battery system with integrated BMS for superior solar energy storage and long cycle life.",
-    category: "Solar",
-    type: "Lithium-ion",
-    price: 1200,
-    image: "/lithium-ion-solar-battery-wall.jpg",
-    features: ["6000+ Charge Cycles", "Integrated BMS", "Fast Charging Support"],
-    specs: {
-      voltage: "48V",
-      capacity: "100Ah @ C5",
-      batteryType: "LiFePO4 Lithium-ion",
-      cycleLife: "6000+ Cycles @ 80% DOD",
-      dimensions: "520 x 450 x 180 mm",
-      weight: "42.0 kg",
-      warranty: "120 Months (10 Years)",
-    },
-    applications: ["Solar Storage", "Home Energy Systems", "Off-grid Systems", "Renewable Energy"],
-    certifications: ["ISO 9001:2015", "CE Certified", "UN38.3"],
-  },
-  {
-    id: "4",
-    name: "AutoStart Prime 80",
-    shortDescription:
-      "Maintenance-free SMF battery engineered for reliable cold starts and superior performance in automotive applications.",
-    category: "Automotive",
-    type: "SMF",
-    price: 95,
-    image: "/car-battery-smf.jpg",
-    features: ["High Cold Cranking Amps", "Sealed Maintenance Free", "Spill Proof Design"],
-    specs: {
-      voltage: "12V",
-      capacity: "80Ah @ C20",
-      batteryType: "Sealed Maintenance Free",
-      cycleLife: "400 Cycles",
-      dimensions: "315 x 175 x 190 mm",
-      weight: "18.5 kg",
-      warranty: "24 Months",
-    },
-    applications: ["Cars", "SUVs", "Light Commercial Vehicles", "Sedans"],
-    certifications: ["ISO 9001:2015", "CE Certified"],
-  },
-];
-
+const PRODUCTS = products;
 const { id } = Astro.params;
 const product = PRODUCTS.find((p) => p.id === id);
 

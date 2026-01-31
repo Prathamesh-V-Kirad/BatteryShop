@@ -31,14 +31,14 @@ export function ProductCard({ product }: { product: any }) {
       <div className="p-4 flex-1 space-y-3">
         <h3 className="font-bold">{product.name}</h3>
         <div className="text-xs text-zinc-500 uppercase">
-          {product.voltage} • {product.capacity}
+          {product.specs.voltage} • {product.specs.capacity}
         </div>
 
         <ul className="space-y-1">
-          {product.specs.map((s: string) => (
-            <li key={s} className="text-xs flex gap-2">
+          {product.features.map((feature: string) => (
+            <li key={feature} className="text-xs flex gap-2">
               <span className="h-1 w-1 bg-primary rounded-full mt-2" />
-              {s}
+              {feature}
             </li>
           ))}
         </ul>
@@ -74,8 +74,8 @@ export function ProductCard({ product }: { product: any }) {
                 name: product.name,
                 category: product.category,
                 type: product.type,
-                voltage: product.voltage,
-                capacity: product.capacity,
+                voltage: product.specs.voltage,
+                capacity: product.specs.capacity,
                 image: product.image,
               })
             }
