@@ -1,0 +1,95 @@
+---
+interface Props {
+  items: Array<{
+    question: string;
+    answer: string;
+  }>;
+  category: string;
+}
+
+const { items, category } = Astro.props;
+---
+
+<div class="accordion-wrapper space-y-4">
+  {items.map((item, index) => {
+    const id = `${category}-${index}`;
+    return (
+      <div class="accordion-item bg-card rounded-lg overflow-hidden">
+        <button
+          type="button"
+          class="accordion-trigger w-full flex justify-between items-center text-sm font-medium text-left py-4 px-4 gap-4 hover:bg-accent/50 transition-colors"
+          data-accordion-id={id}
+          aria-expanded="false"
+        >
+          <span class="flex-1 pr-4">{item.question}</span>
+          <svg
+            class="accordion-icon h-4 w-4 transition-transform duration-200 flex-shrink-0 text-muted-foreground"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div
+          class="accordion-content transition-all duration-200 ease-in-out"
+          data-accordion-content={id}
+          style="max-height: 0; overflow: hidden;"
+        >
+          <div class="px-4 pb-4 text-sm text-muted-foreground leading-relaxed">
+            {item.answer}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<script>
+  function initAccordions() {
+    const triggers = document.querySelectorAll('.accordion-trigger');
+    
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', function(this: HTMLElement) {
+        const id = this.getAttribute('data-accordion-id');
+        const content = document.querySelector(`[data-accordion-content="${id}"]`) as HTMLElement;
+        const icon = this.querySelector('.accordion-icon');
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        
+        if (content && icon) {
+          if (isExpanded) {
+            
+            content.style.maxHeight = '0';
+            this.setAttribute('aria-expanded', 'false');
+            icon.classList.remove('rotate-180');
+          } else {
+           
+            content.style.maxHeight = content.scrollHeight + 'px';
+            this.setAttribute('aria-expanded', 'true');
+            icon.classList.add('rotate-180');
+          }
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordions);
+  } else {
+    initAccordions();
+  }
+</script>
+
+<style>
+  .accordion-content {
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .accordion-icon {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .accordion-icon.rotate-180 {
+    transform: rotate(180deg);
+  }
+</style>

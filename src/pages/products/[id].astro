@@ -16,7 +16,7 @@ import {
   Clock,
 } from 'lucide-react';
 
-// Mock data based on the products catalog
+
 const PRODUCTS = [
   {
     id: "1",
@@ -115,12 +115,12 @@ if (!product) {
   return Astro.redirect('/404');
 }
 
-// Helper to format spec keys
+
 const formatSpecKey = (key: string) => {
   return key.replace(/([A-Z])/g, ' $1').trim();
 };
 
-// Helper to get icon for application
+
 const getApplicationIcon = (app: string) => {
   if (app.includes("Home")) return Zap;
   if (app.includes("Solar")) return Sun;

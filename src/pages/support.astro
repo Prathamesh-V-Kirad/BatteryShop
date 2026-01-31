@@ -1,0 +1,433 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Accordion from '../components/Accordian.astro';
+import {
+  Battery,
+  Zap,
+  Scale,
+  Clock,
+  ShieldCheck,
+  Wrench,
+  AlertTriangle,
+  Phone,
+  Mail,
+  MessageCircle,
+  FileText,
+  Download,
+  BookOpen,
+  HelpCircle,
+  ChevronRight,
+  Headphones,
+} from 'lucide-react';
+
+const knowledgeCards = [
+  {
+    title: "How to Choose the Right Battery",
+    description: "Learn about matching battery specs to your application requirements.",
+    icon: HelpCircle,
+    href: "/support/guides/choosing-battery",
+  },
+  {
+    title: "Battery Capacity & Voltage Explained",
+    description: "Understanding Ah ratings, voltage, and how they affect performance.",
+    icon: Zap,
+    href: "/support/guides/capacity-voltage",
+  },
+  {
+    title: "Lead Acid vs Tubular vs Lithium",
+    description: "Compare battery technologies and find the best fit for your needs.",
+    icon: Scale,
+    href: "/support/guides/battery-types",
+  },
+  {
+    title: "Battery Lifespan & Replacement Signs",
+    description: "Know when to replace your battery and how to maximize its life.",
+    icon: Clock,
+    href: "/support/guides/lifespan-replacement",
+  },
+  {
+    title: "Safety & Installation Guidelines",
+    description: "Essential safety protocols and proper installation procedures.",
+    icon: AlertTriangle,
+    href: "/support/guides/safety-installation",
+  },
+];
+
+const faqCategories = [
+  {
+    title: "Warranty Questions",
+    faqs: [
+      {
+        question: "What is the warranty period for batteries?",
+        answer: "Warranty periods vary by product type. Automotive batteries typically come with 24-60 months warranty, inverter batteries with 24-48 months, and industrial batteries with 12-36 months. The specific warranty period is mentioned on the product page and warranty card.",
+      },
+      {
+        question: "How do I claim warranty for my battery?",
+        answer: "To claim warranty, contact our support team with your purchase invoice, warranty card, and battery details. Our technician will inspect the battery and process the claim within 5-7 business days if eligible.",
+      },
+      {
+        question: "What voids the battery warranty?",
+        answer: "Warranty is voided by physical damage, improper installation, use in non-specified applications, tampering with seals, overcharging, deep discharge abuse, or using incompatible chargers.",
+      },
+    ],
+  },
+  {
+    title: "Installation & Replacement",
+    faqs: [
+      {
+        question: "Do you provide installation services?",
+        answer: "Yes, we offer professional installation services for inverter, solar, and industrial batteries. Installation charges vary by location and battery type. Contact us for a quote.",
+      },
+      {
+        question: "Can I install an automotive battery myself?",
+        answer: "Yes, automotive battery replacement is straightforward. Ensure the vehicle is off, disconnect the negative terminal first, then positive. When connecting the new battery, connect positive first, then negative. Ensure terminals are tight and secure.",
+      },
+      {
+        question: "How do I dispose of my old battery?",
+        answer: "We offer battery exchange programs where you can return your old battery when purchasing a new one. Old batteries are recycled responsibly. You can also drop off old batteries at any of our service centers.",
+      },
+    ],
+  },
+  {
+    title: "Charging & Maintenance",
+    faqs: [
+      {
+        question: "How often should I charge my inverter battery?",
+        answer: "Inverter batteries are charged automatically when power is available. If there's a prolonged power outage, ensure the battery gets a full charge cycle at least once every 2-3 weeks to maintain health.",
+      },
+      {
+        question: "What maintenance does a tubular battery need?",
+        answer: "Check water levels monthly and top up with distilled water only. Keep terminals clean and apply petroleum jelly to prevent corrosion. Ensure proper ventilation around the battery.",
+      },
+      {
+        question: "Can I overcharge a sealed maintenance-free battery?",
+        answer: "SMF batteries have built-in protection, but prolonged overcharging can still damage them. Use a compatible charger with automatic cut-off and avoid leaving the battery on charge indefinitely.",
+      },
+    ],
+  },
+  {
+    title: "Bulk Orders & B2B Queries",
+    faqs: [
+      {
+        question: "What is the minimum order quantity for bulk pricing?",
+        answer: "Bulk pricing typically starts at 10 units for automotive batteries, 5 units for inverter batteries, and varies for industrial applications. Contact our B2B team for custom quotes.",
+      },
+      {
+        question: "Do you offer credit terms for business customers?",
+        answer: "Yes, we offer flexible payment terms for verified business customers including NET 30/60 terms, depending on order volume and credit assessment.",
+      },
+      {
+        question: "Can you supply batteries for OEM requirements?",
+        answer: "Yes, we work with OEMs across automotive, telecom, and industrial sectors. We can customize specifications, branding, and packaging based on your requirements. Contact our enterprise team for details.",
+      },
+    ],
+  },
+];
+
+const downloads = [
+  {
+    title: "Product Datasheets",
+    description: "Technical specifications for all battery models",
+    icon: FileText,
+    items: [
+      { name: "Automotive Battery Datasheet", size: "2.4 MB" },
+      { name: "Inverter Battery Datasheet", size: "3.1 MB" },
+      { name: "Solar Battery Datasheet", size: "2.8 MB" },
+    ],
+  },
+  {
+    title: "Installation Manuals",
+    description: "Step-by-step installation guides",
+    icon: BookOpen,
+    items: [
+      { name: "Inverter Battery Installation Guide", size: "1.8 MB" },
+      { name: "Solar System Setup Manual", size: "4.2 MB" },
+      { name: "Industrial UPS Installation", size: "3.5 MB" },
+    ],
+  },
+  {
+    title: "Warranty Documents",
+    description: "Terms, conditions, and claim procedures",
+    icon: ShieldCheck,
+    items: [
+      { name: "Standard Warranty Terms", size: "0.5 MB" },
+      { name: "Extended Warranty Policy", size: "0.4 MB" },
+      { name: "Warranty Claim Form", size: "0.2 MB" },
+    ],
+  },
+];
+
+const trustIndicators = [
+  { icon: ShieldCheck, label: "Up to 60 Months Warranty", sublabel: "Product dependent" },
+  { icon: Battery, label: "ISO 9001 Certified", sublabel: "Quality assured products" },
+  { icon: Headphones, label: "Expert Support", sublabel: "Mon-Sat, 9 AM - 7 PM" },
+  { icon: Wrench, label: "Pan-India Service", sublabel: "500+ service centers" },
+];
+---
+
+<Layout title="Support - VoltCore">
+  <div class="flex min-h-screen flex-col">
+    <Navbar />
+
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section class="bg-zinc-950 text-white py-12 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="max-w-3xl">
+            <div class="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-xs font-medium text-primary uppercase tracking-widest mb-4 lg:mb-6">
+              Customer Support
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-3 lg:mb-4">
+              Support & Battery Guidance
+            </h1>
+            <p class="text-base lg:text-lg text-zinc-400 max-w-2xl">
+              Get help choosing, using, and maintaining your batteries. Our comprehensive resources and expert support team are here to assist you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Knowledge Section -->
+      <section class="py-12 lg:py-20 bg-background">
+        <div class="container mx-auto px-4">
+          <div class="space-y-2 mb-8 lg:mb-12">
+            <h2 class="text-2xl lg:text-3xl font-bold tracking-tight uppercase">Battery Knowledge Center</h2>
+            <div class="h-1 w-20 bg-primary" />
+            <p class="text-muted-foreground mt-4 max-w-2xl text-sm lg:text-base">
+              Essential guides to help you understand, select, and maintain your batteries for optimal performance.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
+            {knowledgeCards.map((card) => (
+              <Card class="group hover:border-primary transition-all duration-300 cursor-pointer overflow-hidden border-zinc-200">
+                <div class="p-5 lg:p-6 flex flex-col h-full">
+                  <div class="w-fit p-3 rounded-lg bg-secondary mb-4">
+                    <card.icon className="h-5 w-5 lg:h-6 lg:w-6 text-foreground group-hover:text-primary" />
+                  </div>
+                  <h3 class="font-bold text-xs lg:text-sm uppercase tracking-tight mb-2">{card.title}</h3>
+                  <p class="text-xs lg:text-sm text-muted-foreground leading-relaxed flex-1">{card.description}</p>
+                  <a
+                    href={card.href}
+                    class="text-xs lg:text-sm font-medium text-primary flex items-center gap-1 mt-3 lg:mt-4 hover:underline"
+                  >
+                    Read Guide <ChevronRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
+                  </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="py-12 lg:py-20 bg-zinc-100">
+        <div class="container mx-auto px-4">
+          <div class="space-y-2 mb-8 lg:mb-12">
+            <h2 class="text-2xl lg:text-3xl font-bold tracking-tight uppercase">Frequently Asked Questions</h2>
+            <div class="h-1 w-20 bg-primary" />
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {faqCategories.map((category) => (
+              <div class="space-y-4">
+                <h3 class="text-xs lg:text-sm font-bold uppercase tracking-widest text-foreground/70 flex items-center gap-2">
+                  <Wrench className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-primary" />
+                  {category.title}
+                </h3>
+                <Accordion items={category.faqs} category={category.title.toLowerCase().replace(/\s+/g, '-')} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Downloads Section -->
+      <section class="py-12 lg:py-20 bg-background">
+        <div class="container mx-auto px-4">
+          <div class="space-y-2 mb-8 lg:mb-12">
+            <h2 class="text-2xl lg:text-3xl font-bold tracking-tight uppercase">Downloads & Resources</h2>
+            <div class="h-1 w-20 bg-primary" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {downloads.map((section) => (
+              <Card class="border-zinc-200">
+                <div class="p-5 lg:p-6">
+                  <div class="flex items-start gap-3 lg:gap-4 mb-4 lg:mb-6">
+                    <div class="p-2.5 lg:p-3 rounded-lg bg-secondary flex-shrink-0">
+                      <section.icon className="h-5 w-5 lg:h-6 lg:w-6 text-foreground" />
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-xs lg:text-sm uppercase tracking-tight">{section.title}</h3>
+                      <p class="text-xs lg:text-sm text-muted-foreground mt-1">{section.description}</p>
+                    </div>
+                  </div>
+                  <ul class="space-y-2 lg:space-y-3">
+                    {section.items.map((item) => (
+                      <li>
+                        <a
+                          href="#"
+                          class="flex items-center justify-between p-2.5 lg:p-3 bg-secondary/50 rounded hover:bg-secondary transition-colors group"
+                        >
+                          <span class="text-xs lg:text-sm font-medium truncate pr-2">{item.name}</span>
+                          <div class="flex items-center gap-2 text-muted-foreground flex-shrink-0">
+                            <span class="text-[10px] lg:text-xs">{item.size}</span>
+                            <Download className="h-3.5 w-3.5 lg:h-4 lg:w-4 group-hover:text-primary transition-colors" />
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Support CTA -->
+      <section class="py-12 lg:py-20 bg-zinc-950 text-white">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div class="space-y-5 lg:space-y-6">
+              <div class="space-y-2">
+                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter">Need More Help?</h2>
+                <p class="text-zinc-400 text-base lg:text-lg">
+                  Our technical support team is available to assist you with any questions or concerns about our products.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
+                <div class="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-white/5 rounded border border-white/10">
+                  <div class="p-2 rounded-lg bg-primary/20 flex-shrink-0">
+                    <Phone className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] lg:text-xs font-medium uppercase tracking-wider text-zinc-400">Phone</p>
+                    <p class="text-xs lg:text-sm font-bold truncate">1800-123-4567</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-white/5 rounded border border-white/10">
+                  <div class="p-2 rounded-lg bg-primary/20 flex-shrink-0">
+                    <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] lg:text-xs font-medium uppercase tracking-wider text-zinc-400">WhatsApp</p>
+                    <p class="text-xs lg:text-sm font-bold truncate">+91 98765 43210</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-white/5 rounded border border-white/10 sm:col-span-2">
+                  <div class="p-2 rounded-lg bg-primary/20 flex-shrink-0">
+                    <Mail className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] lg:text-xs font-medium uppercase tracking-wider text-zinc-400">Email</p>
+                    <p class="text-xs lg:text-sm font-bold truncate">support@voltcore.com</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs lg:text-sm text-zinc-400">
+                <Clock className="h-3.5 w-3.5 lg:h-4 lg:w-4 flex-shrink-0" />
+                <span>Support available Mon-Sat, 9 AM - 7 PM IST</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center lg:items-end">
+              <Card class="bg-white/5 border-white/10 w-full max-w-md">
+                <div class="p-6 lg:p-8 text-center space-y-5 lg:space-y-6">
+                  <div class="p-3 lg:p-4 rounded-full bg-primary/20 w-fit mx-auto">
+                    <Headphones className="h-8 w-8 lg:h-10 lg:w-10 text-primary" />
+                  </div>
+                  <div class="space-y-2">
+                    <h3 class="text-lg lg:text-xl font-bold">Talk to an Expert</h3>
+                    <p class="text-xs lg:text-sm text-zinc-400">
+                      Get personalized recommendations from our battery specialists for your specific requirements.
+                    </p>
+                  </div>
+                  <Button class="w-full h-12 lg:h-14 font-bold text-sm">
+                    Schedule a Call
+                  </Button>
+                  <p class="text-[10px] lg:text-xs text-zinc-500">
+                    Average response time: Under 2 hours
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trust Indicators -->
+      <section class="py-8 lg:py-12 bg-background border-t">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {trustIndicators.map((item) => (
+              <div class="flex items-center gap-3 lg:gap-4">
+                <div class="p-2.5 lg:p-3 rounded-lg bg-secondary flex-shrink-0">
+                  <item.icon className="h-5 w-5 lg:h-6 lg:w-6 text-primary" />
+                </div>
+                <div class="min-w-0">
+                  <p class="text-xs lg:text-sm font-bold">{item.label}</p>
+                  <p class="text-[10px] lg:text-xs text-muted-foreground truncate">{item.sublabel}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t bg-zinc-50 py-8 lg:py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
+          <div class="col-span-2 space-y-4 lg:space-y-6">
+            <a href="/" class="flex items-center gap-2 font-bold tracking-tighter text-lg lg:text-xl">
+              <Battery className="h-5 w-5 lg:h-6 lg:w-6 text-primary fill-primary/20" />
+              <span>VOLT<span class="text-primary">CORE</span></span>
+            </a>
+            <p class="text-xs lg:text-sm text-muted-foreground max-w-xs leading-relaxed">
+              Premium battery solutions for industrial, commercial, and residential applications.
+            </p>
+          </div>
+          <div class="space-y-3 lg:space-y-4">
+            <h4 class="font-bold text-[10px] lg:text-xs uppercase tracking-[0.2em]">Products</h4>
+            <ul class="space-y-2 text-xs lg:text-sm text-muted-foreground">
+              <li><a href="/products?category=automotive" class="hover:text-primary">Automotive</a></li>
+              <li><a href="/products?category=inverter" class="hover:text-primary">Inverters</a></li>
+              <li><a href="/products?category=solar" class="hover:text-primary">Solar Power</a></li>
+              <li><a href="/products?category=industrial" class="hover:text-primary">Industrial</a></li>
+            </ul>
+          </div>
+          <div class="space-y-3 lg:space-y-4">
+            <h4 class="font-bold text-[10px] lg:text-xs uppercase tracking-[0.2em]">Company</h4>
+            <ul class="space-y-2 text-xs lg:text-sm text-muted-foreground">
+              <li><a href="/about" class="hover:text-primary">About Us</a></li>
+              <li><a href="/b2b" class="hover:text-primary">B2B Portal</a></li>
+              <li><a href="/support" class="hover:text-primary">Support</a></li>
+            </ul>
+          </div>
+          <div class="space-y-3 lg:space-y-4">
+            <h4 class="font-bold text-[10px] lg:text-xs uppercase tracking-[0.2em]">Legal</h4>
+            <ul class="space-y-2 text-xs lg:text-sm text-muted-foreground">
+              <li><a href="/privacy" class="hover:text-primary">Privacy Policy</a></li>
+              <li><a href="/warranty" class="hover:text-primary">Warranty</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-8 lg:mt-12 pt-6 lg:pt-8 border-t text-center lg:text-left">
+          <p class="text-[10px] lg:text-xs font-medium text-muted-foreground uppercase tracking-widest">
+            © 2025 VoltCore Power Solutions. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</Layout>

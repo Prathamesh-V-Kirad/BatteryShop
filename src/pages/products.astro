@@ -1,25 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
-import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
-import Checkbox from '../components/Checkbox.astro';
 import Label from '../components/Label.astro';
 import Separator from '../components/Separator.astro';
-import { ShoppingCart } from 'lucide-react';
+import { ProductCard } from '../components/ProductCard.tsx';
 
-// Get query parameters
+
+
 const url = new URL(Astro.request.url);
 const searchParams = url.searchParams;
 
-// Extract filter values from query params
+
 const selectedApplications = searchParams.getAll('application');
 const selectedTypes = searchParams.getAll('type');
 const selectedCapacities = searchParams.getAll('capacity');
 const selectedBrands = searchParams.getAll('brand');
 const selectedVoltages = searchParams.getAll('voltage');
 
-// Helper function to check if a value is selected
 const isSelected = (paramArray: string[], value: string) => {
   return paramArray.some(param => param.toLowerCase() === value.toLowerCase());
 };
@@ -142,7 +140,7 @@ const brands = [
   { label: "Livguard", value: "livguard" },
 ];
 
-// Filter products based on query params
+
 let filteredProducts = PRODUCTS;
 
 if (selectedApplications.length > 0) {
@@ -356,61 +354,10 @@ if (selectedCapacities.length > 0) {
           ) : (
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
               {filteredProducts.map((product) => (
-                <Card class="group overflow-hidden border-zinc-200 hover:border-primary transition-all flex flex-col">
-                  <div class="relative aspect-square bg-zinc-50 overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      class="absolute inset-0 w-full h-full object-contain p-6 sm:p-8 group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
-                      <div class="bg-white/90 backdrop-blur px-2 py-1 text-[10px] font-bold uppercase tracking-widest border">
-                        {product.category}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1 flex flex-col">
-                    <div>
-                      <h3 class="font-bold text-base sm:text-lg leading-tight mb-1">{product.name}</h3>
-                      <div class="flex gap-3 sm:gap-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                        <span>{product.voltage}</span>
-                        <span>•</span>
-                        <span>{product.capacity}</span>
-                      </div>
-                    </div>
-
-                    <div class="space-y-1.5 flex-1">
-                      {product.specs.map((spec) => (
-                        <div class="flex items-center gap-2 text-xs">
-                          <div class="h-1 w-1 rounded-full bg-primary flex-shrink-0" />
-                          <span class="text-zinc-600 font-medium">{spec}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div class="flex gap-2 pt-2">
-                      <Button
-                        variant="outline"
-                        class="flex-1 text-xs font-bold uppercase tracking-wider bg-transparent"
-                        href={`/products/${product.id}`}
-                      >
-                        Details
-                      </Button>
-                      {product.category === "Industrial" ? (
-                        <Button class="flex-1 text-xs font-bold uppercase tracking-wider">
-                          Get Quote
-                        </Button>
-                      ) : (
-                        <Button class="flex-1 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
-                          <ShoppingCart className="h-3.5 w-3.5" />
-                          <span class="hidden sm:inline">Buy Now</span>
-                          <span class="sm:hidden">Buy</span>
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Card>
+                <ProductCard
+            product={product}
+            client:load
+          />
               ))}
             </div>
           )}
@@ -421,7 +368,7 @@ if (selectedCapacities.length > 0) {
 </Layout>
 
 <script>
-  // Mobile filter toggle
+  
   const filterToggle = document.getElementById('filter-toggle');
   const filtersSidebar = document.getElementById('filters-sidebar');
   const filterIcon = document.getElementById('filter-icon');
@@ -433,7 +380,7 @@ if (selectedCapacities.length > 0) {
     });
   }
 
-  // Handle filter checkbox changes
+  
   const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
   
   filterCheckboxes.forEach(checkbox => {
@@ -444,12 +391,12 @@ if (selectedCapacities.length > 0) {
       const formData = new FormData(form);
       const params = new URLSearchParams();
 
-      // Build query string from all checked checkboxes
+      
       formData.forEach((value, key) => {
         params.append(key, value.toString());
       });
 
-      // Redirect to filtered URL
+      
       window.location.href = `/products?${params.toString()}`;
     });
   });

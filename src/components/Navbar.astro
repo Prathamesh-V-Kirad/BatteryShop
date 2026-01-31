@@ -1,6 +1,7 @@
 ---
 import { Battery, Search, ShoppingCart, Menu } from 'lucide-react';
 import Button from './Button.astro';
+import CartDrawer from './CartDrawer';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
@@ -110,11 +111,13 @@ import Button from './Button.astro';
     </div>
 
     <div class="flex items-center gap-4">
+
       <button class="hidden sm:flex h-10 w-10 items-center justify-center hover:bg-accent rounded-md transition-colors">
         <Search className="h-5 w-5" />
       </button>
       <button class="h-10 w-10 flex items-center justify-center hover:bg-accent rounded-md transition-colors">
         <ShoppingCart className="h-5 w-5" />
+        
       </button>
       <Button class="hidden sm:flex border-primary text-primary hover:bg-primary/70 hover:text-white bg-primary">
         Get a Quote
@@ -122,18 +125,18 @@ import Button from './Button.astro';
       <button class="md:hidden h-10 w-10 flex items-center justify-center" id="mobile-menu-btn">
         <Menu className="h-6 w-6" />
       </button>
+      <CartDrawer client:load />
     </div>
   </div>
 </header>
 
 <script>
-  // Simple dropdown interaction
   const dropdownWrapper = document.querySelector('.dropdown-wrapper');
   const dropdownMenu = document.querySelector('.dropdown-menu');
   const dropdownIcon = document.querySelector('.dropdown-icon');
 
   if (dropdownWrapper && dropdownMenu) {
-    let timeout: number;
+    let timeout: ReturnType<typeof setTimeout>;
 
     dropdownWrapper.addEventListener('mouseenter', () => {
       clearTimeout(timeout);
