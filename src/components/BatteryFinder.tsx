@@ -22,6 +22,8 @@ export function BatteryFinder() {
     voltage: "",
     capacity: "",
     brand: "",
+    state: "",
+    city: "",
   });
 
   const handleVehicleSubmit = (e: FormEvent) => {
@@ -121,7 +123,7 @@ export function BatteryFinder() {
             <select
               value={vehicleFilters.manufacturer}
               onChange={(e) => setVehicleFilters({ ...vehicleFilters, manufacturer: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Manufacturer</option>
@@ -132,6 +134,50 @@ export function BatteryFinder() {
               <option value="hero">Hero</option>
             </select>
           </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Fuel Type *</label>
+            <select
+              value={vehicleFilters.fuelType}
+              onChange={(e) => setVehicleFilters({ ...vehicleFilters, fuelType: e.target.value })}
+              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+            >
+              <option value="">Select Fuel Type</option>
+              <option value="lead-acid">Lead Acid</option>
+              <option value="tubular">Exide</option>
+              <option value="lithium">Lithium</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Battery Model *</label>
+            <select
+              value={vehicleFilters.model}
+              onChange={(e) => setVehicleFilters({ ...vehicleFilters, model: e.target.value })}
+              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+            >
+              <option value="">Select Model</option>
+              <option value="lead-acid">Amazon</option>
+              <option value="tubular">Exide</option>
+              <option value="lithium">Lithium</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Battery Brand *</label>
+            <select
+              value={vehicleFilters.brand}
+              onChange={(e) => setVehicleFilters({ ...vehicleFilters, brand: e.target.value })}
+              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+            >
+              <option value="">Select Brand</option>
+              <option value="lead-acid">Amazon</option>
+              <option value="tubular">Exide</option>
+              <option value="lithium">Lithium</option>
+            </select>
+          </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-2">
@@ -139,7 +185,7 @@ export function BatteryFinder() {
               <select
                 value={vehicleFilters.state}
                 onChange={(e) => setVehicleFilters({ ...vehicleFilters, state: e.target.value })}
-                className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                 required
               >
                 <option value="">Select State</option>
@@ -153,7 +199,7 @@ export function BatteryFinder() {
               <select
                 value={vehicleFilters.city}
                 onChange={(e) => setVehicleFilters({ ...vehicleFilters, city: e.target.value })}
-                className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                 required
               >
                 <option value="">Select City</option>
@@ -178,14 +224,14 @@ export function BatteryFinder() {
       {mode === "inverter" && (
         <form onSubmit={handleInverterSubmit} className="space-y-4">
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Application *</label>
+            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Capacity *</label>
             <select
-              value={inverterFilters.application}
-              onChange={(e) => setInverterFilters({ ...inverterFilters, application: e.target.value })}
+              value={inverterFilters.capacity}
+              onChange={(e) => setInverterFilters({ ...inverterFilters, capacity: e.target.value })}
               className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
-              <option value="">Select Application</option>
+              <option value="">Select Capacity</option>
               <option value="inverter">Inverter</option>
               <option value="solar">Solar</option>
               <option value="ups">UPS</option>
@@ -193,16 +239,16 @@ export function BatteryFinder() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Battery Type *</label>
+            <label className="text-xs font-bold text-white/70 uppercase tracking-wider">Battery Brand *</label>
             <select
-              value={inverterFilters.batteryType}
-              onChange={(e) => setInverterFilters({ ...inverterFilters, batteryType: e.target.value })}
+              value={inverterFilters.brand}
+              onChange={(e) => setInverterFilters({ ...inverterFilters, brand: e.target.value })}
               className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
-              <option value="">Select Type</option>
-              <option value="lead-acid">Lead Acid</option>
-              <option value="tubular">Tubular</option>
+              <option value="">Select Brand</option>
+              <option value="lead-acid">Amazon</option>
+              <option value="tubular">Exide</option>
               <option value="lithium">Lithium</option>
             </select>
           </div>
@@ -220,6 +266,37 @@ export function BatteryFinder() {
               <option value="24">24V</option>
               <option value="48">48V</option>
             </select>
+          </div>
+
+           <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold text-white/70 uppercase tracking-wider">State *</label>
+              <select
+                value={inverterFilters.state}
+                onChange={(e) => setInverterFilters({ ...inverterFilters, state: e.target.value })}
+                className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                required
+              >
+                <option value="">Select State</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="delhi">Delhi</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold text-white/70 uppercase tracking-wider">City *</label>
+              <select
+                value={inverterFilters.city}
+                onChange={(e) => setInverterFilters({ ...inverterFilters, city: e.target.value })}
+                className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                required
+              >
+                <option value="">Select City</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="delhi">Delhi</option>
+              </select>
+            </div>
           </div>
 
           <button
