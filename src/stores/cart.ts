@@ -1,7 +1,7 @@
 import { atom } from "nanostores"
 
 export type CartItem = {
-  id: number
+  id: string
   name: string
   category: string
   type: string
@@ -13,19 +13,19 @@ export type CartItem = {
 
 const STORAGE_KEY = "voltcore-cart"
 
-function loadCart(): Record<number, CartItem> {
+function loadCart(): Record<string, CartItem> {
   if (typeof window === "undefined") return {}
 
   const raw = localStorage.getItem(STORAGE_KEY)
   return raw ? JSON.parse(raw) : {}
 }
 
-function saveCart(items: Record<number, CartItem>) {
+function saveCart(items: Record<string, CartItem>) {
   if (typeof window === "undefined") return
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
 }
 
-export const cart = atom<Record<number, CartItem>>({})
+export const cart = atom<Record<string, CartItem>>({})
 
 let initialized = false
 export function initCart() {
@@ -54,7 +54,7 @@ export function addItem(item: Omit<CartItem, "quantity">) {
   cart.set(items)
 }
 
-export function updateQuantity(id: number, delta: number) {
+export function updateQuantity(id: string, delta: number) {
   const items = { ...cart.get() }
   if (!items[id]) return
 

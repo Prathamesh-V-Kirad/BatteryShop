@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Button from '../../components/Button.astro';
 import Separator from '../../components/Separator.astro';
+
 import {
   FileText,
   Download,
@@ -16,7 +17,7 @@ import {
   Clock,
 } from 'lucide-react';
 import { products } from '../../data/products';
-
+import AddToCartButton from '../../components/AddToCart';
 // const PRODUCTS = [
 //   {
 //     id: "1",
@@ -121,7 +122,6 @@ const formatSpecKey = (key: string) => {
   return key.replace(/([A-Z])/g, ' $1').trim();
 };
 
-
 const getApplicationIcon = (app: string) => {
   if (app.includes("Home")) return Zap;
   if (app.includes("Solar")) return Sun;
@@ -158,9 +158,65 @@ const getApplicationIcon = (app: string) => {
                 {product.category}
               </span>
             </div>
+            
+            <div class="absolute top-0 right-0 z-20">
+              <div
+                class="relative flex items-center justify-center
+                      w-24 h-24 lg:w-28 lg:h-28
+                      text-center font-extrabold"
+              >
+               
+                <div
+                  class="absolute inset-0
+                        bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600
+                        shadow-xl"
+                  style="clip-path: polygon(
+                    50% 0%,
+                    62% 14%,
+                    80% 8%,
+                    85% 25%,
+                    100% 30%,
+                    88% 45%,
+                    95% 60%,
+                    78% 65%,
+                    80% 82%,
+                    62% 75%,
+                    50% 100%,
+                    38% 75%,
+                    20% 82%,
+                    22% 65%,
+                    5% 60%,
+                    12% 45%,
+                    0% 30%,
+                    15% 25%,
+                    20% 8%,
+                    38% 14%
+                  );"
+                ></div>
+
+                
+                <div class="relative flex flex-col items-center justify-center px-2">
+                  
+                  <p class="text-white text-s lg:text-xl leading-none">
+                    18 Month
+                  </p>
+
+                  
+                  <div
+                    class="mt-2 px-4 py-1
+                          bg-black text-yellow-300
+                          text-sm lg:text-base
+                          rounded-md tracking-wide shadow-md"
+                  >
+                    WARRANTY
+                  </div>
+                        </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="grid grid-cols-4 gap-2 lg:gap-4">
+          <!-- <div class="grid grid-cols-4 gap-2 lg:gap-4">
             {[1, 2, 3, 4].map((i) => (
               <div class="aspect-square relative bg-zinc-50 border rounded-md cursor-pointer hover:border-primary transition-colors">
                 <img
@@ -170,7 +226,7 @@ const getApplicationIcon = (app: string) => {
                 />
               </div>
             ))}
-          </div>
+          </div> -->
         </div>
 
         <!-- Product Info -->
@@ -183,8 +239,8 @@ const getApplicationIcon = (app: string) => {
           <!-- Key Features Icons -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
             {product.features.map((feature) => (
-              <div class="flex items-start gap-2 lg:gap-3">
-                <div class="h-4 w-4 lg:h-5 lg:w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div class="flex items-center gap-2 lg:gap-3">
+                <div class="h-8 w-8 lg:h-10 lg:w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <CheckCircle2 className="h-2.5 w-2.5 lg:h-3 lg:w-3 text-primary" />
                 </div>
                 <span class="text-[10px] lg:text-xs font-bold uppercase tracking-wider text-zinc-700 leading-tight">{feature}</span>
@@ -193,34 +249,54 @@ const getApplicationIcon = (app: string) => {
           </div>
 
           <Separator />
+          
+          <div class="flex items-center gap-2 lg:gap-2">
+            <h1 class="text-xl lg:text-2xl tracking-tight uppercase leading-tight">
+              MRP :
+            </h1>
 
-          <!-- Primary CTAs -->
-          <div class="flex flex-col sm:flex-row gap-3 lg:gap-4">
-            <Button size="lg" class="h-12 lg:h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1">
-              Request Bulk Quote (B2B)
-            </Button>
-            <Button
-              variant="outline"
-              class="h-12 lg:h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1 border-primary text-primary hover:bg-primary/5 bg-transparent"
-            >
-              Contact for Price (Retail)
-            </Button>
+            <h1 class="text-xl lg:text-2xl font-bold tracking-tight uppercase leading-tight">
+              ₹{product.price}
+            </h1>
           </div>
 
-          <!-- Trust Indicators -->
+
+          <div class="flex flex-col sm:flex-row gap-3 lg:gap-4">
+            <Button 
+              size="lg" 
+              class="h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1 border border-gray-500"
+            >
+              Ask For Quotation
+            </Button>
+            <div class="flex-1">
+              <AddToCartButton 
+                client:load 
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  category: product.category,
+                  type: product.type,
+                  voltage: product.specs.voltage,
+                  capacity: product.specs.capacity,
+                  image: product.image,
+                }}
+              />
+            </div>
+          </div>
+
           <div class="grid grid-cols-3 gap-2 lg:gap-4 border p-3 lg:p-4 bg-zinc-50/50 rounded-lg">
             <div class="text-center space-y-1">
-              <ShieldCheck className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <ShieldCheck className="h-5 w-5 lg:h-7 lg:w-7 mx-auto text-primary" />
               <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Warranty</p>
               <p class="text-[10px] lg:text-[11px] text-muted-foreground">{product.specs.warranty.split(' ')[0]}M</p>
             </div>
             <div class="text-center space-y-1 border-x">
-              <Settings className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <Settings className="h-5 w-5 lg:h-7 lg:w-7 mx-auto text-primary" />
               <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Certified</p>
               <p class="text-[10px] lg:text-[11px] text-muted-foreground">ISO/CE/IEC</p>
             </div>
             <div class="text-center space-y-1">
-              <Clock className="h-4 w-4 lg:h-5 lg:w-5 mx-auto text-primary" />
+              <Clock className="h-5 w-5 lg:h-7 lg:w-7 mx-auto text-primary" />
               <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest leading-none">Support</p>
               <p class="text-[10px] lg:text-[11px] text-muted-foreground">24/7 Technical</p>
             </div>
@@ -335,4 +411,8 @@ const getApplicationIcon = (app: string) => {
       </div>
     </footer>
   </div>
+
+  
 </Layout>
+
+
