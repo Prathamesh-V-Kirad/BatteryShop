@@ -159,60 +159,47 @@ const getApplicationIcon = (app: string) => {
               </span>
             </div>
             
-            <div class="absolute top-0 right-0 z-20">
+            <div class="absolute top-0 right-0 z-20 overflow-hidden">
               <div
                 class="relative flex items-center justify-center
-                      w-24 h-24 lg:w-28 lg:h-28
+                      w-[clamp(4.5rem,8vw,8rem)]
+                      h-[clamp(4.5rem,8vw,8rem)]
                       text-center font-extrabold"
               >
-               
-                <div
-                  class="absolute inset-0
-                        bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600
-                        shadow-xl"
-                  style="clip-path: polygon(
-                    50% 0%,
-                    62% 14%,
-                    80% 8%,
-                    85% 25%,
-                    100% 30%,
-                    88% 45%,
-                    95% 60%,
-                    78% 65%,
-                    80% 82%,
-                    62% 75%,
-                    50% 100%,
-                    38% 75%,
-                    20% 82%,
-                    22% 65%,
-                    5% 60%,
-                    12% 45%,
-                    0% 30%,
-                    15% 25%,
-                    20% 8%,
-                    38% 14%
-                  );"
-                ></div>
-
                 
-                <div class="relative flex flex-col items-center justify-center px-2">
-                  
-                  <p class="text-white text-s lg:text-xl leading-none">
-                    18 Month
-                  </p>
+                
+                    <div
+                      class="absolute inset-0
+                            bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600
+                            shadow-xl"
+                      style="clip-path: polygon(
+                        50% 0%, 59% 12%, 75% 7%, 78% 22%, 93% 25%, 88% 41%, 100% 50%, 
+                        88% 59%, 93% 75%, 78% 78%, 75% 93%, 59% 88%, 50% 100%, 
+                        41% 88%, 25% 93%, 22% 78%, 7% 75%, 12% 59%, 0% 50%, 
+                        12% 41%, 7% 25%, 22% 22%, 25% 7%, 41% 12%
+                      );"
+                    ></div>
 
-                  
-                  <div
-                    class="mt-2 px-4 py-1
-                          bg-black text-yellow-300
-                          text-sm lg:text-base
-                          rounded-md tracking-wide shadow-md"
-                  >
-                    WARRANTY
+                    
+                    <div class="relative flex flex-col items-center justify-center px-1 text-center w-full">
+                      
+                      <p class="block w-full text-white text-[clamp(0.6rem,1.5vw,1.0rem)] leading-none bg-black text-white mt-2 p-1">
+                        {product.specs.warranty.split(" ")[0]} Months
+                      </p>
+
+                      <div
+                        class="mt-1 px-2 py-[2px]
+                              bg-black text-yellow-300
+                              text-[clamp(0.5rem,1vw,0.9rem)]
+                              
+                              rounded-md tracking-wide shadow-md"
+                      >
+                        WARRANTY
+                      </div>
+                    </div>
                   </div>
-                        </div>
-              </div>
-            </div>
+                </div>
+
 
           </div>
 
