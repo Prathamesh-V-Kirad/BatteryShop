@@ -50,22 +50,43 @@ import {
             <div class="h-1 w-20 bg-primary mx-auto mt-6"></div>
           </div>
         </section>
-    
-        <!-- Who We Are -->
-        <section class="py-20">
-          <div class="container mx-auto px-4 max-w-3xl text-center space-y-6">
-            <h2 class="text-3xl font-bold">Who We Are</h2>
-            <p class="text-muted-foreground text-lg">
-              VoltCore is a trusted supplier of industrial and consumer batteries, serving
-              businesses and individuals who depend on reliable energy storage.
-            </p>
-            <p class="text-muted-foreground">
-              We focus on certified products, strong inventory, and engineering-led support —
-              prioritizing reliability over marketing promises.
-            </p>
+        <!-- Who We Are + Location -->
+        <section class="py-20 bg-white">
+          <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-[6fr_4fr] gap-12 items-center">
+              <div class="space-y-6">
+                <h2 class="text-3xl font-bold">Who We Are</h2>
+                <p class="text-muted-foreground text-lg text-justify">
+                  VoltCore is a trusted supplier of industrial and consumer batteries, serving
+                  businesses and individuals who depend on reliable energy storage.
+                </p>
+                <p class="text-muted-foreground">
+                  We focus on certified products, strong inventory, and engineering-led support —
+                  prioritizing reliability over marketing promises.
+                </p>
+
+                <div class="flex items-center gap-2 text-sm font-semibold text-primary">
+                  <MapPin className="h-4 w-4" />
+                  Navi Mumbai, Maharashtra, India
+                </div>
+              </div>
+
+              <div class="w-full h-[350px] lg:h-[450px] rounded-xl overflow-hidden shadow-lg">
+                
+                <iframe
+                  src="https://maps.google.com/maps?width=600&height=400&hl=en&q=National%20Battery%20Aggarwal%20Chambers%2C%20Sector%2019-C%2C%2C%20Vashi%2C%20Navi%20Mumbai%2C%20Maharashtra%20400703&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+                  width="100%"
+                  height="100%"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy">
+                </iframe>
+                <a href="https://sprunkiretake.net" style="font-size:2px!important;color:gray!important;position:absolute;bottom:0;left:0;z-index:1;max-height:1px;overflow:hidden">Sprunki</a>
+              </div>
+
+            </div>
           </div>
         </section>
-    
         <!-- What We Do -->
         <section class="py-20 bg-zinc-100">
           <div class="container mx-auto px-4">
