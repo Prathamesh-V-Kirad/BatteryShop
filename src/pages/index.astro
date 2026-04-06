@@ -5,6 +5,7 @@ import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
 import { BatteryFinder } from '../components/BatteryFinder';
 import { Car, Zap, Factory, Sun, Truck, ShieldCheck, Clock, HeadphonesIcon, ChevronRight, ArrowRight, Battery } from 'lucide-react';
+import Testimonials from '../components/Testimonials.astro';
 
 const categories = [
   { title: "Automotive", icon: Car, desc: "Start every journey reliably" },
@@ -102,7 +103,7 @@ const features = [
       </section>
 
       <!-- Why Choose Us -->
-      <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-zinc-100">
+      <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-zinc-300/50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             <div class="space-y-6 sm:space-y-8">
@@ -143,6 +144,7 @@ const features = [
         </div>
       </section>
 
+      <Testimonials/>
       <!-- CTA Section -->
       <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-zinc-950 text-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-8">

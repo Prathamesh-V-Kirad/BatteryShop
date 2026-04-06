@@ -1,0 +1,128 @@
+---
+
+import { testimonials } from '../data/testimonials';
+
+---
+
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4 text-center">
+    
+    <h2 class="text-3xl font-bold mb-10">What Our Customers Say</h2>
+
+    <div class="relative w-full max-w-6xl mx-auto">
+      
+
+      <div id="carousel" class="overflow-hidden relative w-full px-6">
+  <div id="slides" class="flex gap-8 transition-transform duration-500 will-change-transform">
+    
+    {testimonials.map((t) => (
+      <div class="flex-shrink-0 w-[300px] sm:w-[360px] lg:w-[420px]">
+       <div class="bg-zinc-100 p-8 rounded-2xl shadow-lg h-full flex flex-col">
+
+ 
+  <div class="flex-1 flex items-center justify-center">
+    <p class="text-muted-foreground italic text-sm leading-relaxed max-w-[90%] text-center">
+      "{t.text}"
+    </p>
+  </div>
+
+
+  <div class="mt-6 text-center">
+    <p class="font-bold">{t.name}</p>
+    <p class="text-sm text-muted-foreground">{t.role}</p>
+  </div>
+
+</div>
+      </div>
+    ))}
+
+  </div>
+</div>
+
+      <!-- Controls -->
+      <div class="flex justify-center gap-4 mt-6">
+        <button id="prev" class="px-4 py-2 bg-zinc-200 rounded hover:bg-zinc-300">
+          Prev
+        </button>
+        <button id="next" class="px-4 py-2 bg-primary text-white rounded hover:opacity-90">
+          Next
+        </button>
+      </div>
+
+    </div>
+    <div class="flex justify-center gap-2 mt-4" id="dots"></div>
+  </div>
+
+  <!-- Script -->
+ <script is:inline>
+  setTimeout(() => {
+    const slides = document.getElementById("slides");
+    const nextBtn = document.getElementById("next");
+    const prevBtn = document.getElementById("prev");
+    const dotsContainer = document.getElementById("dots");
+
+    if (!slides || !dotsContainer) {
+      console.error("Carousel elements missing");
+      return;
+    }
+
+    let index = Math.floor(slides.children.length / 2);
+    const total = slides.children.length;
+
+    const gap = 32;
+    let cardWidth = slides.children[0].clientWidth + gap;
+
+    function updateSlide() {
+      const containerWidth = slides.parentElement.clientWidth;
+      const offset = (containerWidth - cardWidth) / 2;
+
+      slides.style.transform =
+        `translateX(${offset - index * cardWidth}px)`;
+
+      updateDots();
+    }
+
+    function updateDots() {
+      [...dotsContainer.children].forEach((dot, i) => {
+        dot.classList.toggle("bg-primary", i === index);
+        dot.classList.toggle("bg-zinc-400", i !== index);
+      });
+    }
+
+    function next() {
+      index = (index + 1) % total;
+      updateSlide();
+    }
+
+    function prev() {
+      index = (index - 1 + total) % total;
+      updateSlide();
+    }
+
+    nextBtn?.addEventListener("click", next);
+    prevBtn?.addEventListener("click", prev);
+
+    // Create dots
+    dotsContainer.innerHTML = "";
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement("button");
+      dot.className = "w-2 h-2 rounded-full bg-zinc-400";
+
+      dot.addEventListener("click", () => {
+        index = i;
+        updateSlide();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+
+    updateSlide();
+
+    window.addEventListener("resize", () => {
+      cardWidth = slides.children[0].clientWidth + gap;
+      updateSlide();
+    });
+
+  }, 0);
+</script>
+</section>
