@@ -3,6 +3,7 @@ import { createPortal } from "react-dom"
 import { useStore } from "@nanostores/react"
 import { cart, updateQuantity } from "../stores/cart"
 import { ShoppingCart, X, Plus, Minus } from "lucide-react"
+import CheckoutModal from "./checkoutModal"
 
 export default function NavbarCartDrawer() {
   const $cart = useStore(cart)
@@ -11,12 +12,18 @@ export default function NavbarCartDrawer() {
 
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-
+  const [showCheckout, setShowCheckout] = useState(false)
   // ✅ Ensure portal runs only on client
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  const formatPrice = (p: number) => `₹${(p || 0).toLocaleString("en-IN")}`
+
+  const totalPrice = items.reduce(
+    (sum, i) => sum + (i.price || 0) * i.quantity,
+    0
+  )
   return (
     <>
       {/* Cart Button inside Navbar */}
@@ -68,12 +75,15 @@ export default function NavbarCartDrawer() {
                       />
 
                       <div className="flex-1">
-                        <p className="font-bold text-sm">{item.name}</p>
+                        <p className="font-bold text-lg">{item.name}</p>
 
                         <p className="text-xs text-zinc-500">
                           {item.voltage} • {item.capacity}
                         </p>
 
+                        <p className="text-lg font-bold text-zinc-800">
+                          {formatPrice(item.price)}
+                        </p>
                         {/* Quantity */}
                         <div className="flex items-center gap-2 mt-2">
                           <button
@@ -102,18 +112,49 @@ export default function NavbarCartDrawer() {
                 )}
               </div>
 
+              
               {/* Footer */}
-              {items.length > 0 && (
-                <div className="p-4 border-t">
-                  <button className="w-full bg-primary text-white py-2 rounded font-bold">
+             {items.length > 0 && (
+              <div className="border-t">
+
+                {/* 🧾 Summary */}
+                <div className="p-4 space-y-2 bg-gray-50">
+                  <div className="flex justify-between text-sm text-zinc-600">
+                    <span>Items</span>
+                    <span>{totalItems}</span>
+                  </div>
+
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span>{formatPrice(totalPrice)}</span>
+                  </div>
+                </div>
+
+                {/* Checkout Button */}
+                <div className="p-4">
+                  <button
+                    onClick={() => setShowCheckout(true)}
+                    className="w-full bg-primary text-white py-2 rounded font-bold"
+                  >
                     Checkout
                   </button>
                 </div>
-              )}
+
+              </div>
+            )}
             </div>
           </div>,
           document.body
         )}
+        {mounted && showCheckout &&
+          createPortal(
+            <CheckoutModal
+              items={items}
+              onClose={() => setShowCheckout(false)}
+            />,
+            document.body
+          )
+        }
     </>
   )
 }

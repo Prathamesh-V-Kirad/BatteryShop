@@ -261,7 +261,6 @@ if (selectedCapacities.length > 0) {
           class="w-full lg:w-64 space-y-6 lg:space-y-8 flex-shrink-0 hidden lg:block"
         >
           <form id="filter-form" class="space-y-6 lg:space-y-8">
-            <!-- Application Filter -->
             <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
               <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Application</h3>
               <div class="space-y-3">
@@ -283,7 +282,6 @@ if (selectedCapacities.length > 0) {
 
             <Separator class="lg:block hidden" />
 
-            <!-- Battery Type Filter -->
             <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
               <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Battery Type</h3>
               <div class="space-y-3">
@@ -305,7 +303,6 @@ if (selectedCapacities.length > 0) {
 
             <Separator class="lg:block hidden" />
 
-            <!-- Voltage Filter -->
             <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
               <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Voltage</h3>
               <div class="space-y-3">
@@ -327,7 +324,6 @@ if (selectedCapacities.length > 0) {
 
             <Separator class="lg:block hidden" />
 
-            <!-- Capacity Filter -->
             <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
               <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Capacity (Ah)</h3>
               <div class="space-y-3">
@@ -349,7 +345,6 @@ if (selectedCapacities.length > 0) {
 
             <Separator class="lg:block hidden" />
 
-            <!-- Brand Filter -->
             <div class="space-y-4 bg-card p-4 lg:p-0 rounded-lg lg:bg-transparent">
               <h3 class="font-bold uppercase text-xs tracking-widest text-primary">Brand</h3>
               <div class="space-y-3">
@@ -369,7 +364,6 @@ if (selectedCapacities.length > 0) {
               </div>
             </div>
 
-            <!-- Clear Filters Button -->
             {(selectedApplications.length > 0 || selectedTypes.length > 0 || selectedCapacities.length > 0 || selectedBrands.length > 0 || selectedVoltages.length > 0) && (
               <Button 
                 variant="outline" 
@@ -393,7 +387,6 @@ if (selectedCapacities.length > 0) {
           </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="flex-1 space-y-6 lg:space-y-8">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-4">
             <h1 class="text-xl sm:text-2xl font-bold uppercase tracking-tight">Product Catalog</h1>

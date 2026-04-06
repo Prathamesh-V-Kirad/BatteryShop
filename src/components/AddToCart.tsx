@@ -10,6 +10,7 @@ interface Product {
   voltage: string;
   capacity: string;
   image: string;
+  price: number;
 }
 
 export default function AddToCartButton({ product }: { product: Product }) {
@@ -17,7 +18,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
   const quantity = $cart[product.id]?.quantity ?? 0;
   const isInCart = quantity > 0;
 
-
+  console.log("Rendering AddToCartButton for", product);
   const baseClasses = "h-14 w-full flex items-center justify-center font-bold text-xs lg:text-sm uppercase tracking-[0.15em] border border-gray-500 transition-colors";
 
   if (product.category === "Industrial") {
@@ -59,6 +60,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           voltage: product.voltage,
           capacity: product.capacity,
           image: product.image,
+          price: product.price
         })
       }
       className={`${baseClasses} bg-primary text-white hover:bg-primary/90 gap-2`}

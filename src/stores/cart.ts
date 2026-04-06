@@ -9,6 +9,7 @@ export type CartItem = {
   capacity: string
   image: string
   quantity: number
+  price:number
 }
 
 const STORAGE_KEY = "voltcore-cart"

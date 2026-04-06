@@ -77,6 +77,7 @@ export function ProductCard({ product }: { product: any }) {
                 voltage: product.specs.voltage,
                 capacity: product.specs.capacity,
                 image: product.image,
+                price:product.price
               })
             }
             className="w-full py-2 text-xs font-bold bg-primary text-white flex items-center justify-center gap-2"
