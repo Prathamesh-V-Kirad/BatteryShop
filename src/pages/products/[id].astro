@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { products } from '../../data/products';
 import AddToCartButton from '../../components/AddToCart';
+import AskQuotationButton from '../../components/AskQuotationButton.jsx';
 // const PRODUCTS = [
 //   {
 //     id: "1",
@@ -249,12 +250,10 @@ const getApplicationIcon = (app: string) => {
 
 
           <div class="flex flex-col sm:flex-row gap-3 lg:gap-4">
-            <Button 
-              size="lg" 
-              class="h-14 px-6 lg:px-8 font-bold text-xs lg:text-sm uppercase tracking-[0.15em] flex-1 border border-gray-500"
-            >
-              Ask For Quotation
-            </Button>
+            <AskQuotationButton 
+  client:load
+  product={product}
+/>
             <div class="flex-1">
               <AddToCartButton 
                 client:load 

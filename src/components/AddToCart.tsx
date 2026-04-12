@@ -23,7 +23,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
 
   if (product.category === "Industrial") {
     return (
-      <button className={`${baseClasses} bg-primary text-white hover:bg-primary/90`}>
+      <button className={`${baseClasses} bg-primary text-white hover:bg-primary`}>
         Get Quote
       </button>
     );
@@ -63,7 +63,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           price: product.price
         })
       }
-      className={`${baseClasses} bg-primary text-white hover:bg-primary/90 gap-2`}
+      className={`${baseClasses} bg-primary text-white hover:bg-primary/70 gap-2`}
     >
       <ShoppingCart className="h-4 w-4" />
       Add to Cart
