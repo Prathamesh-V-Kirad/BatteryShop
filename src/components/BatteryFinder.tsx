@@ -139,7 +139,7 @@ export function BatteryFinder() {
             <select
               value={vehicleFilters.fuelType}
               onChange={(e) => setVehicleFilters({ ...vehicleFilters, fuelType: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Fuel Type</option>
@@ -154,7 +154,7 @@ export function BatteryFinder() {
             <select
               value={vehicleFilters.model}
               onChange={(e) => setVehicleFilters({ ...vehicleFilters, model: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Model</option>
@@ -169,7 +169,7 @@ export function BatteryFinder() {
             <select
               value={vehicleFilters.brand}
               onChange={(e) => setVehicleFilters({ ...vehicleFilters, brand: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Brand</option>
@@ -228,7 +228,7 @@ export function BatteryFinder() {
             <select
               value={inverterFilters.capacity}
               onChange={(e) => setInverterFilters({ ...inverterFilters, capacity: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Capacity</option>
@@ -243,7 +243,7 @@ export function BatteryFinder() {
             <select
               value={inverterFilters.brand}
               onChange={(e) => setInverterFilters({ ...inverterFilters, brand: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Brand</option>
@@ -258,7 +258,7 @@ export function BatteryFinder() {
             <select
               value={inverterFilters.voltage}
               onChange={(e) => setInverterFilters({ ...inverterFilters, voltage: e.target.value })}
-              className="px-3 py-2 rounded-sm bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="px-3 py-2 rounded-sm bg-zinc-800/70 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               required
             >
               <option value="">Select Voltage</option>
