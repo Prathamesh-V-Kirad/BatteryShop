@@ -14,9 +14,12 @@ type CartItem = {
 type Props = {
   items: CartItem[]
   onClose: () => void
+  customMessage?: string       
+  useFormattedItems?: boolean  
+
 }
 
-export default function CheckoutModal({ items, onClose }: Props) {
+export default function CheckoutModal({ items, onClose , customMessage, useFormattedItems = true }: Props) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [copied, setCopied] = useState(false)
@@ -32,6 +35,7 @@ export default function CheckoutModal({ items, onClose }: Props) {
     0
   )
 
+
   // ✅ Format items
   const formatPrice = (p: number) => `₹${(p || 0).toLocaleString("en-IN")}`
 
@@ -45,23 +49,46 @@ export default function CheckoutModal({ items, onClose }: Props) {
         })
         .join("\n\n")
 
-        const message = `*NEW ORDER REQUEST*
+          const baseMessage =  `
+            ${customMessage}
+            
+            *NEW ORDER REQUEST*
 
-        Order ID: ${orderId}
+            Order ID: ${orderId}
 
-        Name: ${name || "N/A"}
-        Email: ${email || "N/A"}
+            Name: ${name || "N/A"}
+            Email: ${email || "N/A"}
 
-        -------------------------
-        ITEMS:
-        -------------------------
-        ${formattedItems}
+            -------------------------
+            ITEMS:
+            -------------------------
+            ${formattedItems}
 
-        -------------------------
-        TOTAL: ${formatPrice(totalPrice)}
-        -------------------------
+            -------------------------
+            TOTAL: ${formatPrice(totalPrice)}
+            -------------------------
 
-        Please confirm availability.`
+            Please confirm availability.`
+            
+
+        const message = baseMessage
+        // const message = `*NEW ORDER REQUEST*
+
+        // Order ID: ${orderId}
+
+        // Name: ${name || "N/A"}
+        // Email: ${email || "N/A"}
+
+        // -------------------------
+        // ITEMS:
+        // -------------------------
+        // ${formattedItems}
+
+        // -------------------------
+        // TOTAL: ${formatPrice(totalPrice)}
+        // -------------------------
+
+        // Please confirm availability.`
 
 
   // ✅ WhatsApp
@@ -90,6 +117,8 @@ export default function CheckoutModal({ items, onClose }: Props) {
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[10000] flex items-center justify-center p-4 backdrop-blur-sm">

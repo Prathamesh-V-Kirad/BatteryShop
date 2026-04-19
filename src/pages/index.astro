@@ -6,6 +6,7 @@ import Button from '../components/Button.astro';
 import { BatteryFinder } from '../components/BatteryFinder';
 import { Car, Zap, Factory, Sun, Truck, ShieldCheck, Clock, HeadphonesIcon, ChevronRight, ArrowRight, Battery } from 'lucide-react';
 import Testimonials from '../components/Testimonials.astro';
+import ExpertTalkButton from "../components/ExpertTalkButton.jsx"
 
 const categories = [
   { title: "Automotive", icon: Car, desc: "Start every journey reliably" },
@@ -55,7 +56,7 @@ const features = [
                   Buy for Home / Retail
                   <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button variant="outline" size="lg" class="h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold border-white/20 text-white hover:bg-white/10 bg-transparent w-full sm:w-auto" href="/b2b">
+                <Button variant="outline" size="lg" class="h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold border-white/20 text-white hover:bg-white/10 bg-transparent w-full sm:w-auto" href="/bulkOrder">
                   Business & Bulk Orders
                 </Button>
               </div>
@@ -153,7 +154,7 @@ const features = [
             Our engineers are ready to help you find the perfect power solution for your specific requirements.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <Button size="lg" class="h-12 sm:h-14 px-6 sm:px-8 font-bold w-full sm:w-auto">Talk to an Expert</Button>
+            <ExpertTalkButton client:load />
             <Button variant="outline" size="lg" class="h-12 sm:h-14 px-6 sm:px-8 font-bold border-white/20 hover:bg-white/10 bg-transparent w-full sm:w-auto">
               View Catalog
             </Button>
